@@ -31,12 +31,12 @@ namespace ProyectoPOO_1
             while (!salir) 
             {
 
-                AgregarVehiculo();
-                EditarVehiculo();
+                AgregarCliente();
+                MostrarCliente();
+                EliminarCliente();
+                MostrarCliente();
 
-            
-            
-            
+
             }
 
 
@@ -87,6 +87,153 @@ namespace ProyectoPOO_1
 
 
         //------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //seaaaa Cliente
+        private void AgregarCliente()
+        {
+            Console.Clear();
+            Console.WriteLine("Informacion del nuevo Cliente: ");
+
+            Console.Write("Razon Social: ");
+            string razonSocial = Console.ReadLine();
+            Console.Write("Rut: ");
+            string rut = Console.ReadLine();
+            Console.Write("Direccion: ");
+            string direccion = Console.ReadLine();
+            Console.Write("Telefono: ");
+            string telefono = Console.ReadLine();
+            Console.Write("Email: ");
+            string email = Console.ReadLine();
+
+            Cliente cliente = new Cliente(razonSocial, rut, direccion, telefono, email);
+
+            clientes.Add(cliente);
+        }
+        private void MostrarCliente()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese el rut del Cliente a mostrar:");
+            string rut = Console.ReadLine();
+
+            int index = ObtenerVehiculo(rut);
+
+            clientes[index].ObtenerInfoCliente();
+
+
+        }
+
+        private void EliminarCliente()
+        {
+            Console.WriteLine("Ingrese el rut del Cliente para eliminarlo");
+            string rut= Console.ReadLine();
+
+            Cliente clienteAEliminar = clientes.Find(c => c.Rut == rut);
+
+            if (clienteAEliminar != null)
+            {
+                // Elimina el cliente de la lista
+                clientes.Remove(clienteAEliminar);
+                Console.WriteLine("Cliente eliminado con éxito.");
+            }
+            else
+            {
+                Console.WriteLine("Cliente no encontrado. Verifique el RUT ingresado.");
+            }
+        }
+
+
+
+
+
     }
 
     }

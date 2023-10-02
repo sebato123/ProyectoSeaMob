@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProyectoPOO_1
@@ -58,6 +59,17 @@ namespace ProyectoPOO_1
             get { return email; }
         }
         //-------------------------------
+
+        public void ObtenerInfoCliente()
+        {
+            Console.WriteLine("La Razon Social es:" + razonSocial);
+            Console.WriteLine("El Rut es: " + rut);
+            Console.WriteLine("La Direccion es: " + direccion);
+            Console.WriteLine("El Telefono es: " + telefono);
+            Console.WriteLine("El Email es: "+ email);
+
+            Console.ReadKey();
+        }
     }
 }
 
