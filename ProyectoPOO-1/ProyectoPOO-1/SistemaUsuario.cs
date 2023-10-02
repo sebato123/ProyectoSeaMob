@@ -229,7 +229,37 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Cliente no encontrado. Verifique el RUT ingresado.");
             }
         }
+        private void EditarCliente()
+        {
+            Console.WriteLine("Ingrese el RUT del Cliente que desea editar:");
+            string rut = Console.ReadLine();
 
+            // Busca el cliente por su RUT en la lista
+            Cliente clienteAEditar = clientes.Find(c => c.Rut == rut);
+
+            if (clienteAEditar != null)
+            {
+                Console.WriteLine("Cliente encontrado. Ingrese los nuevos datos:");
+
+                Console.WriteLine("Nueva Razón Social:");
+                clienteAEditar.RazonSocial = Console.ReadLine();
+
+                Console.WriteLine("Nueva Dirección:");
+                clienteAEditar.Direccion = Console.ReadLine();
+
+                Console.WriteLine("Nuevo Teléfono de Contacto:");
+                clienteAEditar.Telefono = Console.ReadLine();
+
+                Console.WriteLine("Nuevo Email de Contacto:");
+                clienteAEditar.Email = Console.ReadLine();
+
+                Console.WriteLine("Cliente editado con éxito.");
+            }
+            else
+            {
+                Console.WriteLine("Cliente no encontrado. Verifique el RUT ingresado.");
+            }
+        }
 
 
 
