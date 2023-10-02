@@ -62,8 +62,11 @@ namespace ProyectoPOO_1
 
         public void ObtenerInformacion()
         {
-            Console.WriteLine("La marca es:" + marca);
-
+            Console.WriteLine("La patente es: " + patente);
+            Console.WriteLine("La marca es: " + marca);
+            Console.WriteLine("El modelo es: " + modelo);
+            Console.WriteLine("El color es: " + color);
+            Console.WriteLine("El año es: " + ano);
             Console.ReadKey();
         }  
 

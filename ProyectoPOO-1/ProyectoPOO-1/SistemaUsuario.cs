@@ -32,7 +32,8 @@ namespace ProyectoPOO_1
             {
 
                 AgregarVehiculo();
-                EditarVehiculo();
+                AgregarVehiculo();
+                ListarVehiculo();
 
             
             
@@ -64,15 +65,41 @@ namespace ProyectoPOO_1
             Console.Clear();
             Console.WriteLine("Ingrese la patente del vehiculo a modificar:");
             string patente = Console.ReadLine();
-
             int index = ObtenerVehiculo(patente);
+            vehiculos[index].ObtenerInformacion();
 
-            vehiculos[index].ObtenerInformacion();  
-            
 
 
 
         }
+
+        private void EliminarVehiculo()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese la patente del vehiculo a eliminar:");
+            string patente = Console.ReadLine();
+            int index = ObtenerVehiculo(patente);
+
+            vehiculos.RemoveAt(index);
+            Console.WriteLine("El vehiculo se ha eliminado correctamente");
+        }
+
+        private void ListarVehiculo()
+        {
+            int n = 1;
+            Console.Clear();
+            foreach (Vehiculo auto in vehiculos)
+            {
+                Console.WriteLine("---------------- Vehiculo " + n + " -----------------");
+                auto.ObtenerInformacion();
+                n++;
+            }
+
+
+
+
+        }
+
         private int ObtenerVehiculo(string patente)
         {
             foreach (Vehiculo auto in vehiculos)
@@ -82,6 +109,7 @@ namespace ProyectoPOO_1
                     return vehiculos.IndexOf(auto);
                 }
             }
+            Console.WriteLine("No se pudo encontrar el vehiculo");
             return 0;
         }
 
