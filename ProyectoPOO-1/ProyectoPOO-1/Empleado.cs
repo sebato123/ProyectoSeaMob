@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoPOO_1
 {
-    internal class Empleado
+    public class Empleado
     {
         private string nombre;
         private string rut;
