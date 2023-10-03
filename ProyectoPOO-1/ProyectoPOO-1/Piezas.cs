@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace ProyectoPOO_1
         private string identificadorUnico;
         private string marca;
         private string proveedor;
-        private int costoUnitario;
+        private string costoUnitario;
 
-        public Piezas(string nuevoIdentificadorUnico, string nuevoMarca, string nuevoProveedor, int nuevoCostoUnitario)
+        public Piezas(string nuevoIdentificadorUnico, string nuevoMarca, string nuevoProveedor, string nuevoCostoUnitario)
         {
             identificadorUnico = nuevoIdentificadorUnico;
             marca = nuevoMarca;
@@ -43,11 +44,22 @@ namespace ProyectoPOO_1
             set { proveedor = value; }
             get { return proveedor; }
         }
-        public int CostoUnitario
+        public string CostoUnitario
         {
             set { costoUnitario = value; }
             get { return costoUnitario; }
         }
         //--------------------------------------
+        public void ObtenerInformacion()
+        {
+            Console.WriteLine("El identificador Unico es: " + identificadorUnico);
+            Console.WriteLine("La marca es: " + marca);
+            Console.WriteLine("El proveedor es: " + proveedor);
+            Console.WriteLine("El costo unitario es: " + costoUnitario);
+            Console.ReadKey();
+        }
+
+
     }
+
 }
