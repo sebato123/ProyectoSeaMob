@@ -31,10 +31,9 @@ namespace ProyectoPOO_1
             while (!salir) 
             {
 
-                AgregarCliente();
-                MostrarCliente();
-                EliminarCliente();
-                MostrarCliente();
+                
+
+
 
 
             }
@@ -235,7 +234,7 @@ namespace ProyectoPOO_1
             string rut = Console.ReadLine();
 
             // Busca el cliente por su RUT en la lista
-            Cliente clienteAEditar = clientes.Find(c => c.Rut == rut);
+            Cliente clienteAEditar = clientes.Find(cliente => cliente.Rut == rut);
 
             if (clienteAEditar != null)
             {
