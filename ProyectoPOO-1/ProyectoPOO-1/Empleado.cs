@@ -9,14 +9,14 @@ namespace ProyectoPOO_1
     public class Empleado
     {
         private string nombre;
-        private string rut;
-        private string telefono;
+        private string rutEmpleado;
+        private string telefonoEmpleado;
 
-        public Empleado(string nuevoNombre, string nuevoRut, string nuevoTelefono)
+        public Empleado(string nuevoNombre, string nuevoRutEmpleado, string nuevoTelefonoEmpleado)
         {
             nombre = nuevoNombre;
-            rut = nuevoRut;
-            telefono = nuevoTelefono;
+            rutEmpleado = nuevoRutEmpleado;
+            telefonoEmpleado = nuevoTelefonoEmpleado;
         }
 
 
@@ -29,18 +29,27 @@ namespace ProyectoPOO_1
             get { return nombre; }
         }
 
-        public string Rut
+        public string RutEmpleado
         {
-            set { rut = value; }
-            get { return rut; }
+            set { rutEmpleado = value; }
+            get { return rutEmpleado; }
         }
 
-        public string Telefono
+        public string TelefonoEmpleado
         {
-            set { telefono = value; }
-            get { return telefono; }
+            set { telefonoEmpleado = value; }
+            get { return telefonoEmpleado; }
         }
 
         //---------------------------------------
+
+        public void ObtenerInfoEmpleado()
+        {
+            Console.WriteLine("El Nombre es:" + nombre);
+            Console.WriteLine("El Rut es: " + rutEmpleado);
+            Console.WriteLine("El Telefono es: " + telefonoEmpleado);
+
+            Console.ReadKey();
+        }
     }
 }
