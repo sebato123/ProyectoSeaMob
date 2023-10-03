@@ -94,10 +94,6 @@ namespace ProyectoPOO_1
                 auto.ObtenerInformacion();
                 n++;
             }
-
-
-
-
         }
 
         private int ObtenerVehiculo(string patente)
