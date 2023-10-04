@@ -5,3 +5,11 @@ C:\Users\wwwma\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\D
 C:\Users\wwwma\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.csproj.CoreCompileInputs.cache
 C:\Users\wwwma\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.exe
 C:\Users\wwwma\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.pdb
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\bin\Debug\ProyectoPOO-1.exe.config
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\bin\Debug\ProyectoPOO-1.exe
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\bin\Debug\ProyectoPOO-1.pdb
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.csproj.AssemblyReference.cache
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.csproj.SuggestedBindingRedirects.cache
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.csproj.CoreCompileInputs.cache
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.exe
+C:\Users\laboratorio\Documents\GitHub\ProyectoSeaMob\ProyectoPOO-1\ProyectoPOO-1\obj\Debug\ProyectoPOO-1.pdb

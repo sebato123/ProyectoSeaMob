@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProyectoPOO_1
@@ -9,18 +11,18 @@ namespace ProyectoPOO_1
     public class Cliente
     {
         private string razonSocial;
-        private string rut;
+        private string rutCliente;
         private string direccion;
-        private string telefono;
+        private string telefonoCliente;
         private string email;
 
         //Constructor
-        public Cliente(string nuevoRazonSocial, string nuevoRut, string nuevoDireccion, string nuevoTelefono, string nuevoEmail)
+        public Cliente(string nuevoRazonSocial, string nuevoRutCliente, string nuevoDireccion, string nuevoTelefonoCliente, string nuevoEmail)
         {
             razonSocial = nuevoRazonSocial;
-            rut = nuevoRut;
+            rutCliente = nuevoRutCliente;
             direccion = nuevoDireccion;
-            telefono = nuevoTelefono;
+            telefonoCliente = nuevoTelefonoCliente;
             email = nuevoEmail;
         }
 
@@ -34,10 +36,10 @@ namespace ProyectoPOO_1
             get { return razonSocial; }
         }
 
-        public string Rut
+        public string RutCliente
         {
-            set { rut = value; }
-            get { return rut; }
+            set { rutCliente = value; }
+            get { return rutCliente; }
         }
 
         public string Direccion
@@ -46,10 +48,10 @@ namespace ProyectoPOO_1
             get { return direccion; }
         }
 
-        public string Telefono
+        public string TelefonoCliente
         {
-            set { telefono = value; }
-            get { return telefono; }
+            set { telefonoCliente = value; }
+            get { return telefonoCliente; }
         }
 
         public string Email
@@ -58,6 +60,17 @@ namespace ProyectoPOO_1
             get { return email; }
         }
         //-------------------------------
+
+        public void ObtenerInfoCliente()
+        {
+            Console.WriteLine("La Razon Social es: "+ razonSocial);
+            Console.WriteLine("El Rut es: "+ rutCliente);
+            Console.WriteLine("La Direccion es: "+ direccion);
+            Console.WriteLine("El Telefono es: " + telefonoCliente);
+            Console.WriteLine("El Email es: "+  email);
+
+            Console.ReadKey();
+        }
     }
 }
 
