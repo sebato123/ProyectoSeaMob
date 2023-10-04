@@ -13,7 +13,7 @@ namespace ProyectoPOO_1
         private List<Vehiculo> vehiculos;
         private List<InfoReparacionMantencion> info;
         private List<Piezas> piezas;
-
+        private List<Piezas> piezasMantencion;
 
         public SistemaUsuario()
         {
@@ -51,15 +51,22 @@ namespace ProyectoPOO_1
             Console.Clear();
             Console.WriteLine("Informacion del nuevo vehiculo: ");
 
-            string marca = Console.ReadLine();
-            string patente = Console.ReadLine(); ;
-            string modelo = Console.ReadLine(); ;
-            string color = Console.ReadLine(); ;
-            int ano = int.Parse(Console.ReadLine());
+            string patente = Console.ReadLine();
+            if (ExisteVehiculo(patente) == true)
+            {
+                Console.WriteLine("Ese vehiculo ya existe");
 
-            Vehiculo vehiculo = new Vehiculo(marca, patente, modelo, color, ano);
+            }
+            else
+            {
+                string marca = Console.ReadLine();
+                string modelo = Console.ReadLine(); ;
+                string color = Console.ReadLine(); ;
+                int ano = int.Parse(Console.ReadLine());
 
-            vehiculos.Add(vehiculo);
+                Vehiculo vehiculo = new Vehiculo(marca, patente, modelo, color, ano);
+                vehiculos.Add(vehiculo);
+            }
         }
         private void EditarVehiculo()
         {
@@ -67,15 +74,15 @@ namespace ProyectoPOO_1
             Console.WriteLine("Ingrese la patente del vehiculo a modificar:");
             string patente = Console.ReadLine();
             int index = ObtenerVehiculo(patente);
-            vehiculos[index].ObtenerInformacion();
+            if (index < 0)
+            {
+                Console.WriteLine("No se ha encontrado el vehiculo.");
+            }
+            else
+            {
+                
 
-
-            vehiculos[index].ObtenerInformacion();
-
-
-
-
-
+            }
         }
 
         private void EliminarVehiculo()
@@ -84,9 +91,15 @@ namespace ProyectoPOO_1
             Console.WriteLine("Ingrese la patente del vehiculo a eliminar:");
             string patente = Console.ReadLine();
             int index = ObtenerVehiculo(patente);
-
-            vehiculos.RemoveAt(index);
-            Console.WriteLine("El vehiculo se ha eliminado correctamente");
+            if (index < 0)
+            {
+                Console.WriteLine("No se ha encontrado el vehiculo.");
+            }
+            else
+            {
+                vehiculos.RemoveAt(index);
+                Console.WriteLine("El vehiculo se ha eliminado correctamente");
+            }      
         }
 
         private void ListarVehiculo()
@@ -111,7 +124,19 @@ namespace ProyectoPOO_1
                 }
             }
             Console.WriteLine("No se pudo encontrar el vehiculo");
-            return 0;
+            return -1;
+        }
+
+        private bool ExisteVehiculo(string patente)
+        {
+            foreach (Vehiculo auto in vehiculos)
+            { 
+                if (patente == auto.Patente)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
@@ -124,6 +149,12 @@ namespace ProyectoPOO_1
             Console.WriteLine("Informacion de la nueva Pieza/Parte");
 
             string identificadorUnico = Console.ReadLine();
+            if (ExistePieza(identificadorUnico) == true)
+            {
+                Console.WriteLine("Esa pieza ya existe");
+            }
+            else
+            { 
             string marcaPieza = Console.ReadLine();
             string proveedor = Console.ReadLine();
             string costoUnitario = Console.ReadLine();
@@ -131,21 +162,28 @@ namespace ProyectoPOO_1
             Piezas pieza = new Piezas(identificadorUnico, marcaPieza, proveedor, costoUnitario);
 
             piezas.Add(pieza);
+         }
         }
 
         private void EditarPiezas()
         {
             Console.Clear();
             Console.WriteLine("Ingrese la patente del vehiculo a modificar:");
-            string patente = Console.ReadLine();
-            int index = ObtenerVehiculo(patente);
-            vehiculos[index].ObtenerInformacion();
-
+            string id = Console.ReadLine();
+            int index = ObtenerPiezas(id);
+            piezas[index].ObtenerInformacion();
+            if (index < 0)
+            {
+                Console.WriteLine("No se ha encontrado la pieza.");
+            }
+            else
+            {
+                
+            }
 
 
 
         }
-
 
         private void EliminarPiezas()
         {
@@ -154,8 +192,15 @@ namespace ProyectoPOO_1
             string id = Console.ReadLine();
             int index = ObtenerPiezas(id);
 
-            piezas.RemoveAt(index);
-            Console.WriteLine("La pieza se ha eliminado correctamente");
+            if (index < 0)
+            {
+                Console.WriteLine("No se ha encontrado la pieza.");
+            }
+            else
+            {
+                piezas.RemoveAt(index);
+                Console.WriteLine("La pieza se ha eliminado correctamente");
+            }
         }
 
 
@@ -181,14 +226,136 @@ namespace ProyectoPOO_1
                 }
             }
             Console.WriteLine("No se pudo encontrar la Pieza/Parte");
-            return 0;
+            return -1;
+        }
+
+        private bool ExistePieza(string id)
+        {
+            foreach (Piezas pieza in piezas)
+            {
+                if (id == pieza.IdentificadorUnico )
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //----------------------------------------------------------------------------------
 
+        //----------------------------------MANTENCIONES-------------------------
+
+        private void AgregarMantencion()
+        {
+            piezasMantencion.Clear();
+            Console.WriteLine("A continuacion ingrese la informacion correspondiente a la mantencion:");
+            Console.WriteLine("Ingrese la patente del vehiculo a realizar la mantencion:");
+            string patente = Console.ReadLine();
+            if (ExisteMantencion(patente) == true)
+            {
+                Console.WriteLine("Ese vehiculo ya tiene una mantencion designada");
+            }
+            else
+            {
+                Console.WriteLine("Ingrese el kilometraje");
+                string kilometraje = Console.ReadLine();
+
+                Console.WriteLine("Ingrese la descripcion de la inspeccion visual");
+                string inspeccion = Console.ReadLine();
+
+                Console.WriteLine("Ingrese el trabajo a realizar:");
+                string trabajo = Console.ReadLine();
+
+                Console.WriteLine("Ingrese la fecha de ingreso del vehiculo");
+                string fecha = Console.ReadLine();
+
+                Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
+                Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. 3.- Terminar de elegir piezas");
+                int opcion = int.Parse(Console.ReadLine());
+                int salirmantencion = 1;
+                while (salirmantencion == 1)
+                {
+                    switch (opcion)
+                    {
+                        case 1:
+                            AgregarPiezas();
+                            Piezas pieza = piezas.Last();
+                            piezasMantencion.Add(pieza);
+                            break;
+                        case 2:
+                            Console.WriteLine("Ingrese el identificador unico de la pieza:");
+                            string id = Console.ReadLine();
+                            int index = ObtenerPiezas(id);
+
+                            Piezas pieza1 = piezas[index];
+                            piezasMantencion.Add(pieza1);
+                            break;
+                        case 3:
+                            salirmantencion = 2;
+                            break;
+                        default:
+                            Console.WriteLine("Elija una opcion valida");
+                            break;
+                    }
+                }
 
 
 
+
+
+                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fecha, piezasMantencion);
+                info.Add(Mantencion);
+
+            }
+        }
+
+
+        private void EditarMantencion()
+        {
+
+        }
+
+        private void EliminarMantencion()
+        {
+            Console.WriteLine("Ingrese la patente de la mantencion que desea eliminar");
+            string patente = Console.ReadLine();
+            int index = ObtenerMantencion(patente);
+            if (index < 0)
+            {
+                Console.WriteLine("No se encontro la mantencion.");
+            }
+            else
+            {
+                info.RemoveAt(index);
+                Console.WriteLine("Se ha eliminado la mantencion exitosamente.");
+            }
+        }
+
+        private int ObtenerMantencion(string patente)
+        {
+            foreach (InfoReparacionMantencion repairs in info)
+            {
+                if (patente == repairs.Patente)
+                {
+                    return info.IndexOf(repairs);
+                }
+            }
+            return -1;
+        }
+
+            
+
+        private bool ExisteMantencion(string patente)
+        {
+            foreach(InfoReparacionMantencion A in info)
+            {
+                if (A.Patente == patente)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
 
@@ -282,10 +449,11 @@ namespace ProyectoPOO_1
             Console.Clear();
             Console.WriteLine("Informacion del nuevo Cliente: ");
 
-            Console.Write("Razon Social: ");
-            string razonSocial = Console.ReadLine();
             Console.Write("Rut: ");
             string rutCliente = Console.ReadLine();
+            Console.Write("Razon Social: ");
+            string razonSocial = Console.ReadLine();
+            
             Console.Write("Direccion: ");
             string direccion = Console.ReadLine();
             Console.Write("Telefono: ");
@@ -463,10 +631,7 @@ namespace ProyectoPOO_1
 
 
         }
-
-        //--------------------------------MANTENIMIENTO------------------------
-
-
+        
 
 
 

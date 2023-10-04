@@ -68,8 +68,6 @@ namespace ProyectoPOO_1
             Console.WriteLine("El color es: " + color);
             Console.WriteLine("El año es: " + ano);
             Console.ReadKey();
-        }  
-
-
+        }
     } 
     }
