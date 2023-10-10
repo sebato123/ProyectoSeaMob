@@ -45,24 +45,25 @@ namespace ProyectoPOO_1
                 Console.WriteLine("");
                 Console.WriteLine("1. Cliente");
                 Console.WriteLine("2. Vehiculo");
-                Console.WriteLine("3. Partes o Piezas");
-                Console.WriteLine("4. Mantenciones");
+                Console.WriteLine("3. Empleado");
+                Console.WriteLine("4. Partes o Piezas");
+                Console.WriteLine("5. Mantenciones");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 Console.WriteLine("Otras Opciones: ");
                 Console.WriteLine("");
-                Console.WriteLine("5. Listar todas las mantenciones que no se han completado");
+                Console.WriteLine("6. Listar todas las mantenciones que no se han completado");
                 Console.WriteLine("");
-                Console.WriteLine("6. Listar todos los vehículos con sus mantenciones realizadas y partes o piezas\r\nutilizadas, ordenados por fecha de ingreso.");
+                Console.WriteLine("7. Listar todos los vehículos con sus mantenciones realizadas y partes o piezas\r\nutilizadas, ordenados por fecha de ingreso.");
                 Console.WriteLine("");
-                Console.WriteLine("7. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
+                Console.WriteLine("8. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
                 Console.WriteLine("");
                 Console.WriteLine("");
-                Console.WriteLine("8. Guardar o Cargar info desde archivo");
+                Console.WriteLine("9. Guardar o Cargar info desde archivo");
                 Console.WriteLine("");
 
-                Console.WriteLine("9. Salir");
+                Console.WriteLine("10. Salir");
 
                 int opcion;
                 bool volverAlMenu = false;
@@ -164,7 +165,57 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                        case 3://Partes o Piezas
+                        case 3:
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Empleado");
+                                Console.WriteLine("2. Editar Empleado");
+                                Console.WriteLine("3. Eliminar Empleado");
+                                Console.WriteLine("4. Listar Empleado");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
+
+                                int opcionEmpleado;
+                                if (int.TryParse(Console.ReadLine(), out opcionEmpleado))
+                                {
+
+                                    switch (opcionEmpleado)
+                                    {
+                                        case 1:
+
+                                            AgregarEmpleado();
+
+                                            break;
+                                        case 2:
+
+                                            EditarEmpleado();
+
+                                            break;
+                                        case 3:
+
+                                            EliminarEmpleado();
+
+                                            break;
+
+                                        case 4:
+
+                                            ListarEmpleado();
+
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
+                            break;
+
+                        case 4://Partes o Piezas
                             do
                             {
                                 Console.Clear();
@@ -213,7 +264,7 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                        case 4://Mantenciones
+                        case 5://Mantenciones
                             do
                             {
 
@@ -266,7 +317,7 @@ namespace ProyectoPOO_1
                             break;
 
 
-                        case 5:
+                        case 6:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("");
@@ -277,7 +328,7 @@ namespace ProyectoPOO_1
 
 
                             break;
-                        case 6:
+                        case 7:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("Mantenciones realizadas y partes o piezas utilizadas (Ordenadas por fecha de ingreso): ");
@@ -287,7 +338,7 @@ namespace ProyectoPOO_1
 
                             break; 
                         
-                        case 7:
+                        case 8:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("Empleados, con sus mantenciones o reparaciones realizadas (Ordenadas por duracion de la mantencion): ");
@@ -297,7 +348,7 @@ namespace ProyectoPOO_1
 
                             break;
 
-                        case 8:
+                        case 9:
                             do
                             {
                                 Console.Clear();
@@ -336,7 +387,7 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                            case 9:
+                            case 10:
 
                             salir = true;
 
