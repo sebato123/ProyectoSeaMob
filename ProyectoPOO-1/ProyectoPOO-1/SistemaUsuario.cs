@@ -322,7 +322,7 @@ namespace ProyectoPOO_1
                                             break;
                                         case 2:
 
-                                           //Cargar info desde archivo
+                                            CargarInfoDesdeArchivo();
 
                                             break;
                                         case 3:
@@ -816,7 +816,7 @@ namespace ProyectoPOO_1
             string rutCliente = Console.ReadLine();
 
             int index = ObtenerCliente(rutCliente);
-            clientes[index].ObtenerInfoCliente();
+            clientes[index].ObtenerInfoCliente(); //USAR TRY CATCH
 
         }
 
@@ -1062,14 +1062,78 @@ namespace ProyectoPOO_1
            Console.WriteLine("Datos guardados correctamente.");
         }
 
+        public void CargarInfoDesdeArchivo()
+        {
+            
+            Console.WriteLine("Ingrese el nombre del archivo para cargar los datos: ");
+            string archivo = Console.ReadLine().Trim();
 
+            if (File.Exists(archivo))
+            {
+                
+                
+
+               
+                //Cargamos los empleados
+                string[] lineas = File.ReadAllLines(archivo);
+                int indice = 1;
+                int numeroEmpleados = int.Parse(lineas[indice]);
+
+                for (int i = 0; i < numeroEmpleados; i++)
+                {
+                    string nombre = lineas[indice];
+                    indice++;
+                    indice++;
+                    string rutEmpleado = lineas[indice];
+                    indice++;
+                    string telefonoEmpleado = lineas[indice];
+                    indice++;
+                    int edad = int.Parse(lineas[indice]);
+
+                    Empleado empleado = new Empleado(rutEmpleado, nombre,telefonoEmpleado);
+                    empleados.Add(empleado);
+
+                }
+
+                indice++;
+
+                //Cargamos los clientes
+                int numeroClientes = int.Parse(lineas[indice]);
+
+                for (int i = 0; i < numeroClientes; i++)
+                {
+                    indice++;
+                    string razonSocial = lineas[indice];
+                    indice++;
+                    string rutCliente = lineas[indice];
+                    indice++;
+                    string direccion = lineas[indice];
+                    indice++;
+                    string telefonoCliente = lineas[indice];
+                    indice++;
+                    string email = lineas[indice];
+
+                    Cliente cliente = new Cliente(razonSocial, rutCliente, direccion, telefonoCliente, email);
+                    clientes.Add(cliente);
+
+                   
+                }
+
+                Console.WriteLine("Datos cargados correctamente.");
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Asegúrese de que el archivo especificado exista.");
+            }
         }
+
+    }
         
 
 
 
 
-    }
+}
 
 
 
