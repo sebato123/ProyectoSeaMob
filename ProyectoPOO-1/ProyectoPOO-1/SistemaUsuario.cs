@@ -32,76 +32,270 @@ namespace ProyectoPOO_1
         {
             bool salir = false;
 
-            while (true)
+            while (salir==false)
             {
+                Console.Clear();
                 Console.WriteLine("-------------------IDVRV-------------------");
                 Console.WriteLine("Menu");
                 Console.WriteLine("");
+
                 Console.WriteLine("Que desea Agregar, editar, eliminar o listar?: ");
-                Console.WriteLine("1. Cliente.");
+                Console.WriteLine("");
+                Console.WriteLine("1. Cliente");
                 Console.WriteLine("2. Vehiculo");
                 Console.WriteLine("3. Partes o Piezas");
                 Console.WriteLine("4. Mantenciones");
-               
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Otras Opciones: ");
+                Console.WriteLine("");
+                Console.WriteLine("5. Listar todas las mantenciones que no se han completado");
+                Console.WriteLine("");
+                Console.WriteLine("6. Listar todos los vehículos con sus mantenciones realizadas y partes o piezas\r\nutilizadas, ordenados por fecha de ingreso.");
+                Console.WriteLine("");
+                Console.WriteLine("7. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
+                Console.WriteLine("");
+
+                Console.WriteLine("8. Salir");
+
                 int opcion;
+                bool volverAlMenu = false;
                 if (int.TryParse(Console.ReadLine(), out opcion))
                 {
-
+                   
                     switch (opcion)
                     {
                         case 1://Cliente
-                            Console.Clear();
-                            Console.WriteLine("-------------------IDVRV-------------------");
-                            Console.WriteLine("Que desea Hacer?");
-                            Console.WriteLine("");
-                            Console.WriteLine("1. Agregar Cliente");
-                            Console.WriteLine("2. Editar Cliente");
-                            Console.WriteLine("3. Eliminar Cliente");
-                            Console.WriteLine("4. Listar Cliente");
-
-                            int opcionCliente;
-                            if (int.TryParse(Console.ReadLine(), out opcionCliente))
+                            do
                             {
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Cliente");
+                                Console.WriteLine("2. Editar Cliente");
+                                Console.WriteLine("3. Eliminar Cliente");
+                                Console.WriteLine("4. Listar Clientes");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
 
-                                switch (opcionCliente)
+                                int opcionCliente;
+                                if (int.TryParse(Console.ReadLine(), out opcionCliente))
                                 {
-                                    case 1:
-
-                                        AgregarCliente();
-
-                                        break;
-                                    case 2:
-
-                                        EditarCliente();
-
-                                        break;
-                                    case 3:
-
-                                        EliminarCliente();
-
-                                        break;
-
-                                    case 4:
-
-                                        MostrarCliente();
-
-                                        break;
-
+                                    switch (opcionCliente)
+                                    {
+                                        case 1:
+                                            AgregarCliente();
+                                            break;
+                                        case 2:
+                                            EditarCliente();
+                                            break;
+                                        case 3:
+                                            EliminarCliente();
+                                            break;
+                                        case 4:
+                                            ListarCliente();
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+                                       
+                                    }
                                 }
-
-                            }
+                                
+                            } while (!volverAlMenu);
 
                             break;
 
                         case 2://Vehiculo
+                            do
+                            {
 
+
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Vehiculo");
+                                Console.WriteLine("2. Editar Vehiculo");
+                                Console.WriteLine("3. Eliminar Vehiculo");
+                                Console.WriteLine("4. Listar Vehiculos");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
+
+                                int opcionVehiculo;
+                                if (int.TryParse(Console.ReadLine(), out opcionVehiculo))
+                                {
+
+                                    switch (opcionVehiculo)
+                                    {
+                                        case 1:
+
+                                            AgregarVehiculo();
+
+                                            break;
+                                        case 2:
+
+                                            EditarVehiculo();
+
+                                            break;
+                                        case 3:
+
+                                            EliminarVehiculo();
+
+                                            break;
+
+                                        case 4:
+
+                                            ListarVehiculo();
+
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
                             break;
                         case 3://Partes o Piezas
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Pieza");
+                                Console.WriteLine("2. Editar Pieza");
+                                Console.WriteLine("3. Eliminar Pieza");
+                                Console.WriteLine("4. Listar Piezas");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
 
+                                int opcionPiezas;
+                                if (int.TryParse(Console.ReadLine(), out opcionPiezas))
+                                {
+
+                                    switch (opcionPiezas)
+                                    {
+                                        case 1:
+
+                                            AgregarPiezas();
+
+                                            break;
+                                        case 2:
+
+                                            EditarPiezas();
+
+                                            break;
+                                        case 3:
+
+                                            EliminarPiezas();
+
+                                            break;
+
+                                        case 4:
+
+                                            ListarPiezas();
+
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
                             break;
                         case 4://Mantenciones
+                            do
+                            {
+
+
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Mantencion");
+                                Console.WriteLine("2. Editar Mantencion");
+                                Console.WriteLine("3. Eliminar Mantencion");
+                                Console.WriteLine("4. Listar Mantenciones");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
+
+                                int opcionMantenciones;
+                                if (int.TryParse(Console.ReadLine(), out opcionMantenciones))
+                                {
+
+                                    switch (opcionMantenciones)
+                                    {
+                                        case 1:
+
+                                            AgregarMantencion();
+
+                                            break;
+                                        case 2:
+
+                                            EditarMantencion();
+
+                                            break;
+                                        case 3:
+
+                                            EliminarMantencion();
+
+                                            break;
+
+                                        case 4:
+
+                                            //ListarMantencion();
+
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
+                            break;
+
+
+                        case 5:
+                            Console.Clear();
+                            Console.WriteLine("-------------------IDVRV-------------------");
+                            Console.WriteLine("");
+                            Console.WriteLine("Mantenciones que no se han completado: ");
+                            Console.WriteLine("");
+
+                            MantencionesNoCompletadas();
+
 
                             break;
+                        case 6:
+                            Console.Clear();
+                            Console.WriteLine("-------------------IDVRV-------------------");
+                            Console.WriteLine("Mantenciones realizadas y partes o piezas utilizadas (Ordenadas por fecha de ingreso): ");
+                            Console.WriteLine("");
+
+                            //Funcion para eso
+
+                            break; 
+                        
+                        case 7:
+                            Console.Clear();
+                            Console.WriteLine("-------------------IDVRV-------------------");
+                            Console.WriteLine("Empleados, con sus mantenciones o reparaciones realizadas (Ordenadas por duracion de la mantencion): ");
+                            Console.WriteLine("");
+
+                            //Funcion para eso
+
+                            break;
+
+                        case 8:
+                            salir = true;
+                            break;
+
                     }
                 }
             }
@@ -440,7 +634,7 @@ namespace ProyectoPOO_1
         private void MantencionesNoCompletadas()
         {
             int i = 0;
-            Console.Clear();
+            
             foreach(InfoReparacionMantencion M in info)
             {
                 if (M.Entregado == false)
@@ -548,13 +742,14 @@ namespace ProyectoPOO_1
         private void AgregarCliente()
         {
             Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Informacion del nuevo Cliente: ");
+            Console.WriteLine("");
 
             Console.Write("Rut: ");
             string rutCliente = Console.ReadLine();
             Console.Write("Razon Social: ");
-            string razonSocial = Console.ReadLine();
-            
+            string razonSocial = Console.ReadLine(); 
             Console.Write("Direccion: ");
             string direccion = Console.ReadLine();
             Console.Write("Telefono: ");
@@ -567,9 +762,10 @@ namespace ProyectoPOO_1
             clientes.Add(cliente);
         }
 
-        private void MostrarCliente()
+        private void ListarCliente()
         {
             Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el rut del Cliente a mostrar:");
             string rutCliente = Console.ReadLine();
 
@@ -592,6 +788,8 @@ namespace ProyectoPOO_1
 
         private void EliminarCliente()
         {
+            Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el rut del Cliente para eliminarlo");
             string rutCliente = Console.ReadLine();
 
@@ -610,6 +808,8 @@ namespace ProyectoPOO_1
         }
         private void EditarCliente()
         {
+            Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el RUT del Cliente que desea editar:");
             string rutCliente = Console.ReadLine();
 
@@ -648,6 +848,7 @@ namespace ProyectoPOO_1
         private void AgregarEmpleado()
         {
             Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Informacion del nuevo Empleado: ");
             Console.WriteLine();
 
@@ -660,9 +861,10 @@ namespace ProyectoPOO_1
             Console.WriteLine("Telefono: ");
             string telefonoEmpleado = Console.ReadLine();
         }
-        private void MostrarEmpleado()
+        private void ListarEmpleado()
         {
             Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el rut del Empleado a mostrar:");
             string rutEmpleado = Console.ReadLine();
 
@@ -684,6 +886,8 @@ namespace ProyectoPOO_1
         }
         private void EliminarEmpleado()
         {
+            Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el rut del Empleado para eliminarlo");
             string rutEmpleado = Console.ReadLine();
 
@@ -702,6 +906,8 @@ namespace ProyectoPOO_1
         }
         private void EditarEmpleado()
         {
+            Console.Clear();
+            Console.WriteLine("-------------------IDVRV-------------------");
             Console.WriteLine("Ingrese el RUT del Empleado que desea editar:");
             string rutEmpleado = Console.ReadLine();
 
