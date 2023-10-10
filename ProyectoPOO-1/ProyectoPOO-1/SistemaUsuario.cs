@@ -47,24 +47,25 @@ namespace ProyectoPOO_1
                 Console.WriteLine("");
                 Console.WriteLine("1. Cliente");
                 Console.WriteLine("2. Vehiculo");
-                Console.WriteLine("3. Partes o Piezas");
-                Console.WriteLine("4. Mantenciones");
+                Console.WriteLine("3. Empleado");
+                Console.WriteLine("4. Partes o Piezas");
+                Console.WriteLine("5. Mantenciones");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 Console.WriteLine("Otras Opciones: ");
                 Console.WriteLine("");
-                Console.WriteLine("5. Listar todas las mantenciones que no se han completado");
+                Console.WriteLine("6. Listar todas las mantenciones que no se han completado");
                 Console.WriteLine("");
-                Console.WriteLine("6. Listar todos los vehículos con sus mantenciones realizadas y partes o piezas\r\nutilizadas, ordenados por fecha de ingreso.");
+                Console.WriteLine("7. Listar todos los vehículos con sus mantenciones realizadas y partes o piezas\r\nutilizadas, ordenados por fecha de ingreso.");
                 Console.WriteLine("");
-                Console.WriteLine("7. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
+                Console.WriteLine("8. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
                 Console.WriteLine("");
                 Console.WriteLine("");
-                Console.WriteLine("8. Guardar o Cargar info desde archivo");
+                Console.WriteLine("9. Guardar o Cargar info desde archivo");
                 Console.WriteLine("");
 
-                Console.WriteLine("9. Salir");
+                Console.WriteLine("10. Salir");
 
                 int opcion;
                 bool volverAlMenu = false;
@@ -166,7 +167,56 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                        case 3://Partes o Piezas
+                        case 3:
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Agregar Empleado");
+                                Console.WriteLine("2. Editar Empleado");
+                                Console.WriteLine("3. Eliminar Empleado");
+                                Console.WriteLine("4. Listar Empleado");
+                                Console.WriteLine();
+                                Console.WriteLine("5. Volver al Menú Principal");
+
+                                int opcionEmpleado;
+                                if (int.TryParse(Console.ReadLine(), out opcionEmpleado))
+                                {
+
+                                    switch (opcionEmpleado)
+                                    {
+                                        case 1:
+
+                                            AgregarEmpleado();
+
+                                            break;
+                                        case 2:
+
+                                            EditarEmpleado();
+
+                                            break;
+                                        case 3:
+
+                                            EliminarEmpleado();
+
+                                            break;
+
+                                        case 4:
+
+                                            ListarEmpleado();
+
+                                            break;
+                                        case 5:
+                                            volverAlMenu = true;
+                                            break;
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
+                            break;
+                        case 4://Partes o Piezas
                             do
                             {
                                 Console.Clear();
@@ -215,7 +265,7 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                        case 4://Mantenciones
+                        case 5://Mantenciones
                             do
                             {
 
@@ -268,7 +318,7 @@ namespace ProyectoPOO_1
                             break;
 
 
-                        case 5:
+                        case 6:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("");
@@ -279,7 +329,7 @@ namespace ProyectoPOO_1
 
 
                             break;
-                        case 6:
+                        case 7:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("Mantenciones realizadas y partes o piezas utilizadas (Ordenadas por fecha de ingreso): ");
@@ -289,7 +339,7 @@ namespace ProyectoPOO_1
 
                             break;
 
-                        case 7:
+                        case 8:
                             Console.Clear();
                             Console.WriteLine("-------------------IDVRV-------------------");
                             Console.WriteLine("Empleados, con sus mantenciones o reparaciones realizadas (Ordenadas por duracion de la mantencion): ");
@@ -299,7 +349,7 @@ namespace ProyectoPOO_1
 
                             break;
 
-                        case 8:
+                        case 9:
                             do
                             {
                                 Console.Clear();
@@ -324,7 +374,7 @@ namespace ProyectoPOO_1
                                             break;
                                         case 2:
 
-                                            //Cargar info desde archivo
+                                            CargarInfoDesdeArchivo();
 
                                             break;
                                         case 3:
@@ -338,16 +388,16 @@ namespace ProyectoPOO_1
                                 }
                             } while (!volverAlMenu);
                             break;
-                        case 9:
+                        case 10:
 
                             salir = true;
 
                             break;
 
                     }
-                } 
                 }
             }
+        }
         //-------------------VEHICULOS-------------------------------
         private void AgregarVehiculo()
         {
@@ -383,7 +433,7 @@ namespace ProyectoPOO_1
             }
             else
             {
-                
+
 
             }
         }
@@ -402,7 +452,7 @@ namespace ProyectoPOO_1
             {
                 vehiculos.RemoveAt(index);
                 Console.WriteLine("El vehiculo se ha eliminado correctamente");
-            }      
+            }
         }
 
         private void ListarVehiculo()
@@ -433,7 +483,7 @@ namespace ProyectoPOO_1
         private bool ExisteVehiculo(string patente)
         {
             foreach (Vehiculo auto in vehiculos)
-            { 
+            {
                 if (patente == auto.Patente)
                 {
                     return true;
@@ -468,7 +518,7 @@ namespace ProyectoPOO_1
 
                 Piezas pieza = new Piezas(identificadorUnico, marcaPieza, proveedor, costoUnitario);
                 piezas.Add(pieza);
-         }
+            }
         }
 
         private void EditarPiezas()
@@ -484,7 +534,7 @@ namespace ProyectoPOO_1
             }
             else
             {
-                
+
             }
 
 
@@ -539,7 +589,7 @@ namespace ProyectoPOO_1
         {
             foreach (Piezas pieza in piezas)
             {
-                if (id == pieza.IdentificadorUnico )
+                if (id == pieza.IdentificadorUnico)
                 {
                     return true;
                 }
@@ -550,7 +600,7 @@ namespace ProyectoPOO_1
         //----------------------------------------------------------------------------------
 
         //----------------------------------MANTENCIONES-------------------------
- 
+
         private void AgregarMantencion()
         {
             //Se limpia la lista de piezas de mantencion para reutilizarla.
@@ -568,7 +618,8 @@ namespace ProyectoPOO_1
                 {
                     Console.WriteLine("Ese vehiculo ya tiene una mantencion designada");
                 }
-                else {
+                else
+                {
                     break;
                 }
             }
@@ -599,15 +650,15 @@ namespace ProyectoPOO_1
                         break;
                 }
                 Console.Clear();
-            }     
-                Console.WriteLine("Ingrese el kilometraje");
-                string kilometraje = Console.ReadLine();
+            }
+            Console.WriteLine("Ingrese el kilometraje");
+            string kilometraje = Console.ReadLine();
 
-                Console.WriteLine("Ingrese la descripcion de la inspeccion visual");
-                string inspeccion = Console.ReadLine();
+            Console.WriteLine("Ingrese la descripcion de la inspeccion visual");
+            string inspeccion = Console.ReadLine();
 
-                Console.WriteLine("Ingrese el trabajo a realizar:");
-                string trabajo = Console.ReadLine();
+            Console.WriteLine("Ingrese el trabajo a realizar:");
+            string trabajo = Console.ReadLine();
 
             //Ingresar fecha de ingreso en formato año mes dia.
             string fechaIngreso;
@@ -618,7 +669,7 @@ namespace ProyectoPOO_1
 
                 if (DateTime.TryParseExact(fechaIngreso, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
                 {
-                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd"));break;
+                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd")); break;
                 }
                 else
                 {
@@ -629,50 +680,50 @@ namespace ProyectoPOO_1
 
             //While para crear un menu donde agregar las piezas a utilizar.
             salirmantencion = false;
-                while (salirmantencion == false)
+            while (salirmantencion == false)
+            {
+                Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
+                Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Terminar de elegir piezas");
+                int opcion = int.Parse(Console.ReadLine());
+                switch (opcion)
                 {
-                    Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
-                    Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Terminar de elegir piezas");
-                    int opcion = int.Parse(Console.ReadLine());
-                    switch (opcion)
-                    {
-                        case 1:
-                            AgregarPiezas();
-                            Piezas ultimaPieza = piezas.Last();                      
-                            piezasMantencion.Add(ultimaPieza);                           
-                            break;
-                        case 2:
-                            Console.WriteLine("Ingrese el identificador unico de la pieza:");
-                            string id = Console.ReadLine();
-                            int index = ObtenerPiezas(id);
-                            if (index < 0) { Console.WriteLine("No se encontro la pieza.");  break; }
-                            Piezas pieza1 = piezas[index];
-                            piezasMantencion.Add(pieza1);
-                            break;
-                        case 3:
-                            salirmantencion = true;
-                            break;
-                        default:
-                            Console.WriteLine("Elija una opcion valida");
-                            break;
-                    }
+                    case 1:
+                        AgregarPiezas();
+                        Piezas ultimaPieza = piezas.Last();
+                        piezasMantencion.Add(ultimaPieza);
+                        break;
+                    case 2:
+                        Console.WriteLine("Ingrese el identificador unico de la pieza:");
+                        string id = Console.ReadLine();
+                        int index = ObtenerPiezas(id);
+                        if (index < 0) { Console.WriteLine("No se encontro la pieza."); break; }
+                        Piezas pieza1 = piezas[index];
+                        piezasMantencion.Add(pieza1);
+                        break;
+                    case 3:
+                        salirmantencion = true;
+                        break;
+                    default:
+                        Console.WriteLine("Elija una opcion valida");
+                        break;
                 }
-                bool nuevoEntrega;
+            }
+            bool nuevoEntrega;
             //Pregunta si fue entregado para el bool "Entregado" que se usa en mantenciones.
-                while (true)
-                {
-                    Console.WriteLine("¿El vehiculo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
-                   
-                    int opcionEntrega = int.Parse(Console.ReadLine());
-                    if (opcionEntrega == 1) { nuevoEntrega = true; break; }
-                    if (opcionEntrega == 2) { nuevoEntrega = false; break; }
-                    else { Console.WriteLine("Elija una opcion valida."); }
-                }
-                
-                //Se agrega
-                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado);
-                info.Add(Mantencion);
-            
+            while (true)
+            {
+                Console.WriteLine("¿El vehiculo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
+
+                int opcionEntrega = int.Parse(Console.ReadLine());
+                if (opcionEntrega == 1) { nuevoEntrega = true; break; }
+                if (opcionEntrega == 2) { nuevoEntrega = false; break; }
+                else { Console.WriteLine("Elija una opcion valida."); }
+            }
+
+            //Se agrega
+            InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado);
+            info.Add(Mantencion);
+
         }
 
 
@@ -709,7 +760,7 @@ namespace ProyectoPOO_1
         }
         private bool ExisteMantencion(string patente)
         {
-            foreach(InfoReparacionMantencion A in info)
+            foreach (InfoReparacionMantencion A in info)
             {
                 if (A.Patente == patente)
                 {
@@ -728,22 +779,22 @@ namespace ProyectoPOO_1
         private void MantencionesNoCompletadas()
         {
             int i = 0;
-            
-            foreach(InfoReparacionMantencion M in info)
+
+            foreach (InfoReparacionMantencion M in info)
             {
                 if (M.Entregado == false)
                 {
                     i++;
                     Console.WriteLine("---------------- Vehiculo " + i + "------------------");
                     M.ObtenerInformacion();
-                   
+
                 }
                 else
                 {
                     Console.WriteLine("Este ");
                 }
             }
-            Console.ReadKey();  
+            Console.ReadKey();
         }
 
         private void TodasMantenciones()
@@ -752,7 +803,7 @@ namespace ProyectoPOO_1
             Console.WriteLine("A continuacion se listarán todos los vehículos con sus mantenciones realizadas y partes o piezas \n utilizadas, ordenados por fecha de ingreso.");
 
             List<string> ordenIngreso = new List<string>();
-            
+
             foreach (InfoReparacionMantencion x in info)
             {
                 ordenIngreso.Add(x.FechaIngreso);
@@ -773,9 +824,9 @@ namespace ProyectoPOO_1
                     if (y.FechaIngreso == ordenIngreso[i])
                     {
                         i++;
-                        Console.WriteLine("----------- Vehiculo "+ i + "-------------");
+                        Console.WriteLine("----------- Vehiculo " + i + "-------------");
                         y.ObtenerInformacion();
-                        
+
                     }
                 }
                 j++;
@@ -794,23 +845,23 @@ namespace ProyectoPOO_1
                 List<int> orden = new List<int>();
 
                 //Se agregan las mantenciones que corresponden al empleado a la lista mantenciones
-                foreach(InfoReparacionMantencion y in info)
+                foreach (InfoReparacionMantencion y in info)
                 {
-                    if (y.Empleado == x) 
+                    if (y.Empleado == x)
                     {
                         mantenciones.Add(y);
                     }
                 }
 
                 //Se revisa si el vehiculo fue entregado, de ser así se llama a DiferenciaFechas y se agrega a la lista orden.
-                foreach(InfoReparacionMantencion w in mantenciones)
+                foreach (InfoReparacionMantencion w in mantenciones)
                 {
 
                     if (w.Entregado == true)
                     {
                         orden.Add(w.DiferenciaFechas());
                     }
-      
+
                 }
 
                 //Se ordenan las diferencias de dias de menor a mayor.
@@ -848,7 +899,7 @@ namespace ProyectoPOO_1
 
 
             }
-              
+
         }
 
         //-----------------------------CLIENTE----------------------
@@ -862,7 +913,7 @@ namespace ProyectoPOO_1
             Console.Write("Rut: ");
             string rutCliente = Console.ReadLine();
             Console.Write("Razon Social: ");
-            string razonSocial = Console.ReadLine(); 
+            string razonSocial = Console.ReadLine();
             Console.Write("Direccion: ");
             string direccion = Console.ReadLine();
             Console.Write("Telefono: ");
@@ -1054,15 +1105,15 @@ namespace ProyectoPOO_1
             }
 
         }
-            //--------------GUARDAR TXT--------------------------------
+        //--------------GUARDAR TXT--------------------------------
         private void GuardarInfoEnArchivo()
         {
             Console.Clear();
             Console.WriteLine("Ingrese el nombre del archivo para guardar los datos: ");
             string archivo = Console.ReadLine().Trim();
 
-             using (StreamWriter writer = new StreamWriter(archivo))
-             {
+            using (StreamWriter writer = new StreamWriter(archivo))
+            {
                 // Empleados
                 writer.WriteLine(empleados.Count);
                 foreach (var empleado in empleados)
@@ -1075,7 +1126,7 @@ namespace ProyectoPOO_1
                 }
 
                 // Clientes
-                writer.WriteLine(clientes.Count); 
+                writer.WriteLine(clientes.Count);
                 foreach (var cliente in clientes)
                 {
                     writer.WriteLine("Clientes");
@@ -1089,7 +1140,7 @@ namespace ProyectoPOO_1
                 }
 
                 // Vehiculos
-                writer.WriteLine(vehiculos.Count); 
+                writer.WriteLine(vehiculos.Count);
                 foreach (var vehiculo in vehiculos)
                 {
                     writer.WriteLine("Vehiculos");
@@ -1102,7 +1153,7 @@ namespace ProyectoPOO_1
                 }
 
                 // Partes o piezas
-                writer.WriteLine(piezas.Count); 
+                writer.WriteLine(piezas.Count);
                 foreach (var pieza in piezas)
                 {
                     writer.WriteLine("Partes o Piezas");
@@ -1130,17 +1181,81 @@ namespace ProyectoPOO_1
                 }
             }
 
-           Console.WriteLine("Datos guardados correctamente.");
+            Console.WriteLine("Datos guardados correctamente.");
         }
+
+        public void CargarInfoDesdeArchivo()
+        {
+
+            Console.WriteLine("Ingrese el nombre del archivo para cargar los datos: ");
+            string archivo = Console.ReadLine().Trim();
+
+            if (File.Exists(archivo))
+            {
+
+
+
+
+                //Cargamos los empleados
+                string[] lineas = File.ReadAllLines(archivo);
+                int indice = 1;
+                int numeroEmpleados = int.Parse(lineas[indice]);
+
+                for (int i = 0; i < numeroEmpleados; i++)
+                {
+                    string nombre = lineas[indice];
+                    indice++;
+                    indice++;
+                    string rutEmpleado = lineas[indice];
+                    indice++;
+                    string telefonoEmpleado = lineas[indice];
+                    indice++;
+                    int edad = int.Parse(lineas[indice]);
+
+                    Empleado empleado = new Empleado(rutEmpleado, nombre, telefonoEmpleado);
+                    empleados.Add(empleado);
+
+                }
+
+                indice++;
+
+                //Cargamos los clientes
+                int numeroClientes = int.Parse(lineas[indice]);
+
+                for (int i = 0; i < numeroClientes; i++)
+                {
+                    indice++;
+                    string razonSocial = lineas[indice];
+                    indice++;
+                    string rutCliente = lineas[indice];
+                    indice++;
+                    string direccion = lineas[indice];
+                    indice++;
+                    string telefonoCliente = lineas[indice];
+                    indice++;
+                    string email = lineas[indice];
+
+                    Cliente cliente = new Cliente(razonSocial, rutCliente, direccion, telefonoCliente, email);
+                    clientes.Add(cliente);
+
+
+                }
+
+                Console.WriteLine("Datos cargados correctamente.");
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Asegúrese de que el archivo especificado exista.");
+            }
 
 
         }
-        
 
 
 
 
     }
+}
 
 
 
