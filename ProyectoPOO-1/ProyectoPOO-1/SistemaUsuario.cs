@@ -32,36 +32,11 @@ namespace ProyectoPOO_1
         {
             bool salir = false;
 
-            while (true)
+            while (!salir)
             {
-                Console.WriteLine("-------------------IDVRV-------------------");
-                Console.WriteLine("Menu");
-                Console.WriteLine("");
-                Console.WriteLine("1. ");
-                Console.WriteLine("2. ");
-                Console.WriteLine("3. ");
-                Console.WriteLine("4 ");
-                Console.WriteLine("5. ");
-                Console.WriteLine("6. ");
-                Console.WriteLine("7. ");
-
-                int opcion;
-                if (int.TryParse(Console.ReadLine(), out opcion))
-                {
-
-                    switch (opcion)
-                    {
-                        case 1:
-
-                            break;
-
-                        case 2:
-
-                            break;
-
-
-                    }
-                }
+                AgregarMantencion();
+                AgregarMantencion();
+                MantencionesNoCompletadas();
             }
 
 

@@ -45,9 +45,10 @@ namespace ProyectoPOO_1
 
         public void ObtenerInfoEmpleado()
         {
-            Console.WriteLine("El Nombre es:" + nombre);
+            Console.WriteLine("El Nombre es: " + nombre);
             Console.WriteLine("El Rut es: " + rutEmpleado);
             Console.WriteLine("El Telefono es: " + telefonoEmpleado);
+            
 
             Console.ReadKey();
         }
