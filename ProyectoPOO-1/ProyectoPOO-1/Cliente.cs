@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -62,11 +63,11 @@ namespace ProyectoPOO_1
 
         public void ObtenerInfoCliente()
         {
-            Console.WriteLine("La Razon Social es:" + razonSocial);
-            Console.WriteLine("El Rut es: " + rutCliente);
-            Console.WriteLine("La Direccion es: " + direccion);
+            Console.WriteLine("La Razon Social es: "+ razonSocial);
+            Console.WriteLine("El Rut es: "+ rutCliente);
+            Console.WriteLine("La Direccion es: "+ direccion);
             Console.WriteLine("El Telefono es: " + telefonoCliente);
-            Console.WriteLine("El Email es: "+ email);
+            Console.WriteLine("El Email es: "+  email);
 
             Console.ReadKey();
         }
