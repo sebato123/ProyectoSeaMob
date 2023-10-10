@@ -32,13 +32,79 @@ namespace ProyectoPOO_1
         {
             bool salir = false;
 
-            while (!salir)
+            while (true)
             {
-                AgregarMantencion();
-                AgregarMantencion();
-                MantencionesNoCompletadas();
-            }
+                Console.WriteLine("-------------------IDVRV-------------------");
+                Console.WriteLine("Menu");
+                Console.WriteLine("");
+                Console.WriteLine("Que desea Agregar, editar, eliminar o listar?: ");
+                Console.WriteLine("1. Cliente.");
+                Console.WriteLine("2. Vehiculo");
+                Console.WriteLine("3. Partes o Piezas");
+                Console.WriteLine("4. Mantenciones");
+               
+                int opcion;
+                if (int.TryParse(Console.ReadLine(), out opcion))
+                {
 
+                    switch (opcion)
+                    {
+                        case 1://Cliente
+                            Console.Clear();
+                            Console.WriteLine("-------------------IDVRV-------------------");
+                            Console.WriteLine("Que desea Hacer?");
+                            Console.WriteLine("");
+                            Console.WriteLine("1. Agregar Cliente");
+                            Console.WriteLine("2. Editar Cliente");
+                            Console.WriteLine("3. Eliminar Cliente");
+                            Console.WriteLine("4. Listar Cliente");
+
+                            int opcionCliente;
+                            if (int.TryParse(Console.ReadLine(), out opcionCliente))
+                            {
+
+                                switch (opcionCliente)
+                                {
+                                    case 1:
+
+                                        AgregarCliente();
+
+                                        break;
+                                    case 2:
+
+                                        EditarCliente();
+
+                                        break;
+                                    case 3:
+
+                                        EliminarCliente();
+
+                                        break;
+
+                                    case 4:
+
+                                        MostrarCliente();
+
+                                        break;
+
+                                }
+
+                            }
+
+                            break;
+
+                        case 2://Vehiculo
+
+                            break;
+                        case 3://Partes o Piezas
+
+                            break;
+                        case 4://Mantenciones
+
+                            break;
+                    }
+                }
+            }
 
         }
 
