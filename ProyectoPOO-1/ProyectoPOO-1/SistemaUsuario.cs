@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ProyectoPOO_1
 {
@@ -56,8 +58,11 @@ namespace ProyectoPOO_1
                 Console.WriteLine("");
                 Console.WriteLine("7. Listar todos los empleados, con sus mantenciones o reparaciones realizadas,\r\nordenadas por duración de la mantención");
                 Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("8. Guardar o Cargar info desde archivo");
+                Console.WriteLine("");
 
-                Console.WriteLine("8. Salir");
+                Console.WriteLine("9. Salir");
 
                 int opcion;
                 bool volverAlMenu = false;
@@ -293,7 +298,48 @@ namespace ProyectoPOO_1
                             break;
 
                         case 8:
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine("-------------------IDVRV-------------------");
+                                Console.WriteLine("Que desea Hacer?");
+                                Console.WriteLine("");
+                                Console.WriteLine("1. Guardar en archivo");
+                                Console.WriteLine("2. Cargar en archivo");
+                                Console.WriteLine();
+                                Console.WriteLine("3. Volver al Menú Principal");
+
+                                int opcionArchivos;
+                                if (int.TryParse(Console.ReadLine(), out opcionArchivos))
+                                {
+
+                                    switch (opcionArchivos)
+                                    {
+                                        case 1:
+
+                                            GuardarInfoEnArchivo();
+
+                                            break;
+                                        case 2:
+
+                                           //Cargar info desde archivo
+
+                                            break;
+                                        case 3:
+
+                                            volverAlMenu = true;
+
+                                            break;
+
+
+                                    }
+                                }
+                            } while (!volverAlMenu);
+                            break;
+                            case 9:
+
                             salir = true;
+
                             break;
 
                     }
@@ -936,6 +982,86 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Cliente no encontrado. Verifique el RUT ingresado.");
             }
 
+        }
+            //--------------GUARDAR TXT--------------------------------
+        private void GuardarInfoEnArchivo()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese el nombre del archivo para guardar los datos: ");
+            string archivo = Console.ReadLine().Trim();
+
+             using (StreamWriter writer = new StreamWriter(archivo))
+             {
+                // Empleados
+                writer.WriteLine(empleados.Count);
+                foreach (var empleado in empleados)
+                {
+                    writer.WriteLine("Empleados");
+                    writer.WriteLine(empleado.RutEmpleado);
+                    writer.WriteLine(empleado.Nombre);
+                    writer.WriteLine(empleado.TelefonoEmpleado);
+                    writer.WriteLine();
+                }
+
+                // Clientes
+                writer.WriteLine(clientes.Count); 
+                foreach (var cliente in clientes)
+                {
+                    writer.WriteLine("Clientes");
+                    writer.WriteLine(cliente.RazonSocial);
+                    writer.WriteLine(cliente.RutCliente);
+                    writer.WriteLine(cliente.Direccion);
+                    writer.WriteLine(cliente.TelefonoCliente);
+                    writer.WriteLine(cliente.Email);
+                    writer.WriteLine();
+
+                }
+
+                // Vehiculos
+                writer.WriteLine(vehiculos.Count); 
+                foreach (var vehiculo in vehiculos)
+                {
+                    writer.WriteLine("Vehiculos");
+                    writer.WriteLine(vehiculo.Marca);
+                    writer.WriteLine(vehiculo.Patente);
+                    writer.WriteLine(vehiculo.Modelo);
+                    writer.WriteLine(vehiculo.Color);
+                    writer.WriteLine(vehiculo.Ano);
+                    writer.WriteLine();
+                }
+
+                // Partes o piezas
+                writer.WriteLine(piezas.Count); 
+                foreach (var pieza in piezas)
+                {
+                    writer.WriteLine("Partes o Piezas");
+                    writer.WriteLine(pieza.IdentificadorUnico);
+                    writer.WriteLine(pieza.Marca);
+                    writer.WriteLine(pieza.Proveedor);
+                    writer.WriteLine(pieza.CostoUnitario);
+                    writer.WriteLine();
+                }
+
+                // Mantencion
+                writer.WriteLine(info.Count);
+                foreach (var record in info)
+                {
+                    writer.WriteLine("Mantencion");
+                    writer.WriteLine(record.Patente);
+                    writer.WriteLine(record.Kilometraje);
+                    writer.WriteLine(record.Inspeccion);
+                    writer.WriteLine(record.Trabajo);
+                    writer.WriteLine(record.Fecha);
+                    writer.WriteLine(record.ListaPiezas);
+                    writer.WriteLine(record.Entregado);
+                    writer.WriteLine(record.FechaEntrega);
+                    writer.WriteLine();
+                }
+            }
+
+           Console.WriteLine("Datos guardados correctamente.");
+        }
+
 
         }
         
@@ -944,7 +1070,7 @@ namespace ProyectoPOO_1
 
 
     }
-}
+
 
 
     
