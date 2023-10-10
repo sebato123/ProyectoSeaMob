@@ -14,6 +14,7 @@ namespace ProyectoPOO_1
         private List<InfoReparacionMantencion> info;
         private List<Piezas> piezas;
         private List<Piezas> piezasMantencion;
+        private Empleado nuevoEmpleado;
 
 
 
@@ -34,9 +35,13 @@ namespace ProyectoPOO_1
 
             while (!salir)
             {
+                AgregarEmpleado();
                 AgregarMantencion();
-                AgregarMantencion();
-                MantencionesNoCompletadas();
+                EmpleadosMantenciones();
+
+
+
+
             }
 
 
@@ -252,7 +257,7 @@ namespace ProyectoPOO_1
             Console.Clear();
             Console.WriteLine("A continuacion ingrese la informacion correspondiente a la mantencion:");
 
-            //verifica si una mantencion ya tiene esa patente
+            //Verifica si una mantencion ya tiene esa patente
             string patente;
             while (true)
             {
@@ -266,7 +271,34 @@ namespace ProyectoPOO_1
                     break;
                 }
             }
-            
+            Console.WriteLine("Ingrese el empleado a cargo de la mantencion:");
+            bool salirmantencion = false;
+            while (salirmantencion == false)
+            {
+                //Mini menu para ingresar un empleado nuevo o ya existente
+                Console.WriteLine("1.- Ingresar empleado existente. \n 2.- Ingresar empleado nuevo");
+                int opcion = int.Parse(Console.ReadLine());
+                switch (opcion)
+                {
+                    case 1:
+                        Console.WriteLine("Ingrese el rut del empleado");
+                        string rut = Console.ReadLine();
+                        int index = ObtenerEmpleado(rut);
+                        if (index < 0) { Console.WriteLine("No se encontro el empleado."); break; }
+                        nuevoEmpleado = empleados[index];
+                        salirmantencion = true;
+                        break;
+                    case 2:
+                        AgregarEmpleado();
+                        nuevoEmpleado = empleados.Last();
+                        salirmantencion = true;
+                        break;
+                    default:
+                        Console.WriteLine("Elija una opcion valida.");
+                        break;
+                }
+                Console.Clear();
+            }     
                 Console.WriteLine("Ingrese el kilometraje");
                 string kilometraje = Console.ReadLine();
 
@@ -276,12 +308,27 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Ingrese el trabajo a realizar:");
                 string trabajo = Console.ReadLine();
 
-                Console.WriteLine("Ingrese la fecha de ingreso del vehiculo");
-                string fecha = Console.ReadLine();
+            //Ingresar fecha de ingreso en formato año mes dia.
+            string fechaIngreso;
+            while (true)
+            {
+                Console.WriteLine("Ingrese la fecha de ingreso del vehiculo en formato AAAA-MM-DD:");
+                fechaIngreso = Console.ReadLine();
 
-                //While para crear un menu donde agregar las piezas a utilizar.
-                int salirmantencion = 1;
-                while (salirmantencion == 1)
+                if (DateTime.TryParseExact(fechaIngreso, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
+                {
+                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd"));break;
+                }
+                else
+                {
+                    Console.WriteLine("Fecha ingresada no válida.");
+                }
+            }
+
+
+            //While para crear un menu donde agregar las piezas a utilizar.
+            salirmantencion = false;
+                while (salirmantencion == false)
                 {
                     Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
                     Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Terminar de elegir piezas");
@@ -302,7 +349,7 @@ namespace ProyectoPOO_1
                             piezasMantencion.Add(pieza1);
                             break;
                         case 3:
-                            salirmantencion = 2;
+                            salirmantencion = true;
                             break;
                         default:
                             Console.WriteLine("Elija una opcion valida");
@@ -322,7 +369,7 @@ namespace ProyectoPOO_1
                 }
                 
                 //Se agrega
-                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fecha, piezasMantencion, nuevoEntrega );
+                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado);
                 info.Add(Mantencion);
             
         }
@@ -371,6 +418,12 @@ namespace ProyectoPOO_1
             return false;
         }
 
+
+        //-------------------------------------------------------------------------------
+
+
+        //---------------FUNCIONES EXTRAS--------------------------
+
         private void MantencionesNoCompletadas()
         {
             int i = 0;
@@ -392,6 +445,110 @@ namespace ProyectoPOO_1
             Console.ReadKey();  
         }
 
+        private void TodasMantenciones()
+        {
+            Console.Clear();
+            Console.WriteLine("A continuacion se listarán todos los vehículos con sus mantenciones realizadas y partes o piezas \n utilizadas, ordenados por fecha de ingreso.");
+
+            List<string> ordenIngreso = new List<string>();
+            
+            foreach (InfoReparacionMantencion x in info)
+            {
+                ordenIngreso.Add(x.FechaIngreso);
+            }
+            var fechasOrdenadas = ordenIngreso.OrderBy(fecha => fecha).ToList();
+
+            int i = 0;
+            int j = 0;
+            while (true)
+            {
+                i = 0;
+                if (j >= ordenIngreso.Count)
+                {
+                    break;
+                }
+                foreach (InfoReparacionMantencion y in info)
+                {
+                    if (y.FechaIngreso == ordenIngreso[i])
+                    {
+                        i++;
+                        Console.WriteLine("----------- Vehiculo "+ i + "-------------");
+                        y.ObtenerInformacion();
+                        
+                    }
+                }
+                j++;
+            }
+        }
+
+
+        private void EmpleadosMantenciones()
+        {
+            Console.Clear();
+            Console.WriteLine("A continuacion se listaran todos los empleados, con sus mantenciones o reparaciones realizadas, \nordenadas por duración de la mantención");
+            foreach (Empleado x in empleados)
+            {
+                //Se crean dos listas que se usaran para ordenar los datos
+                List<InfoReparacionMantencion> mantenciones = new List<InfoReparacionMantencion>();
+                List<int> orden = new List<int>();
+
+                //Se agregan las mantenciones que corresponden al empleado a la lista mantenciones
+                foreach(InfoReparacionMantencion y in info)
+                {
+                    if (y.Empleado == x) 
+                    {
+                        mantenciones.Add(y);
+                    }
+                }
+
+                //Se revisa si el vehiculo fue entregado, de ser así se llama a DiferenciaFechas y se agrega a la lista orden.
+                foreach(InfoReparacionMantencion w in mantenciones)
+                {
+
+                    if (w.Entregado == true)
+                    {
+                        orden.Add(w.DiferenciaFechas());
+                    }
+      
+                }
+
+                //Se ordenan las diferencias de dias de menor a mayor.
+                orden.OrderBy(diferencia => diferencia).ToList();
+
+
+                //Se imprime el nombre del empleado y se inicializa i y j.
+                Console.Write("---- " + x.Nombre + " ----\n");
+                int i = 0;
+                int j = 0;
+                while (true)
+                {
+                    //Se vuelve a poner i en 0
+                    i = 0;
+                    if (j >= orden.Count) // Si j es mayor al Count de orden, significa que ya se revisaron todos los elementos de orden.
+                    {
+                        break;
+                    }
+                    foreach (InfoReparacionMantencion z in mantenciones)
+                    //Se revisa si el elemento i de orden es igual a la diferencia de cualquier mantencion.
+                    {
+                        if (z.DiferenciaFechas() == orden[i])
+                        {
+                            i++;
+                            Console.WriteLine("----------- Mantencion " + i + "-------------");
+                            z.ObtenerInformacion();
+
+                        }
+                    }
+                    j++;
+
+                    //Imprimir mantenciones no terminadas)?
+                    Console.ReadKey();
+                }
+
+
+            }
+              
+        }
 
 
 
@@ -593,6 +750,10 @@ namespace ProyectoPOO_1
 
             Console.WriteLine("Telefono: ");
             string telefonoEmpleado = Console.ReadLine();
+
+            Empleado empleado = new Empleado(nombre, rutEmpleado, telefonoEmpleado);
+            empleados.Add(empleado);
+
         }
         private void MostrarEmpleado()
         {
@@ -614,7 +775,7 @@ namespace ProyectoPOO_1
                     return empleados.IndexOf(empleado);
                 }
             }
-            return 0;
+            return -1;
         }
         private void EliminarEmpleado()
         {
