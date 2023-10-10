@@ -15,6 +15,8 @@ namespace ProyectoPOO_1
         private List<Piezas> piezas;
         private List<Piezas> piezasMantencion;
 
+
+
         public SistemaUsuario()
         {
             clientes = new List<Cliente>();
@@ -22,6 +24,8 @@ namespace ProyectoPOO_1
             vehiculos = new List<Vehiculo>();
             info = new List<InfoReparacionMantencion>();
             piezas = new List<Piezas>();
+            piezasMantencion = new List<Piezas>();
+
         }
 
         public void Sistema()
@@ -30,16 +34,9 @@ namespace ProyectoPOO_1
 
             while (!salir)
             {
-
-                AgregarPiezas();
-                AgregarPiezas();
-                EliminarPiezas();
-                ListarPiezas();
-
-
-
-
-
+                AgregarMantencion();
+                AgregarMantencion();
+                MantencionesNoCompletadas();
             }
 
 
@@ -148,20 +145,23 @@ namespace ProyectoPOO_1
             Console.Clear();
             Console.WriteLine("Informacion de la nueva Pieza/Parte");
 
+            Console.WriteLine("Ingrese el identificador unico de la pieza:");
             string identificadorUnico = Console.ReadLine();
             if (ExistePieza(identificadorUnico) == true)
             {
                 Console.WriteLine("Esa pieza ya existe");
             }
             else
-            { 
-            string marcaPieza = Console.ReadLine();
-            string proveedor = Console.ReadLine();
-            string costoUnitario = Console.ReadLine();
+            {
+                Console.WriteLine("Ingrese la marca de la pieza:");
+                string marcaPieza = Console.ReadLine();
+                Console.WriteLine("Ingrese el proveedor de la pieza:");
+                string proveedor = Console.ReadLine();
+                Console.WriteLine("Ingrese el costo unitario de la pieza:");
+                string costoUnitario = Console.ReadLine();
 
-            Piezas pieza = new Piezas(identificadorUnico, marcaPieza, proveedor, costoUnitario);
-
-            piezas.Add(pieza);
+                Piezas pieza = new Piezas(identificadorUnico, marcaPieza, proveedor, costoUnitario);
+                piezas.Add(pieza);
          }
         }
 
@@ -244,19 +244,29 @@ namespace ProyectoPOO_1
         //----------------------------------------------------------------------------------
 
         //----------------------------------MANTENCIONES-------------------------
-
+ 
         private void AgregarMantencion()
         {
+            //Se limpia la lista de piezas de mantencion para reutilizarla.
             piezasMantencion.Clear();
+            Console.Clear();
             Console.WriteLine("A continuacion ingrese la informacion correspondiente a la mantencion:");
-            Console.WriteLine("Ingrese la patente del vehiculo a realizar la mantencion:");
-            string patente = Console.ReadLine();
-            if (ExisteMantencion(patente) == true)
+
+            //verifica si una mantencion ya tiene esa patente
+            string patente;
+            while (true)
             {
-                Console.WriteLine("Ese vehiculo ya tiene una mantencion designada");
+                Console.WriteLine("Ingrese la patente del vehiculo a realizar la mantencion:");
+                patente = Console.ReadLine();
+                if (ExisteMantencion(patente) == true)
+                {
+                    Console.WriteLine("Ese vehiculo ya tiene una mantencion designada");
+                }
+                else {
+                    break;
+                }
             }
-            else
-            {
+            
                 Console.WriteLine("Ingrese el kilometraje");
                 string kilometraje = Console.ReadLine();
 
@@ -269,24 +279,25 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Ingrese la fecha de ingreso del vehiculo");
                 string fecha = Console.ReadLine();
 
-                Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
-                Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. 3.- Terminar de elegir piezas");
-                int opcion = int.Parse(Console.ReadLine());
+                //While para crear un menu donde agregar las piezas a utilizar.
                 int salirmantencion = 1;
                 while (salirmantencion == 1)
                 {
+                    Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
+                    Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Terminar de elegir piezas");
+                    int opcion = int.Parse(Console.ReadLine());
                     switch (opcion)
                     {
                         case 1:
                             AgregarPiezas();
-                            Piezas pieza = piezas.Last();
-                            piezasMantencion.Add(pieza);
+                            Piezas ultimaPieza = piezas.Last();                      
+                            piezasMantencion.Add(ultimaPieza);                           
                             break;
                         case 2:
                             Console.WriteLine("Ingrese el identificador unico de la pieza:");
                             string id = Console.ReadLine();
                             int index = ObtenerPiezas(id);
-
+                            if (index < 0) { Console.WriteLine("No se encontro la pieza.");  break; }
                             Piezas pieza1 = piezas[index];
                             piezasMantencion.Add(pieza1);
                             break;
@@ -298,15 +309,22 @@ namespace ProyectoPOO_1
                             break;
                     }
                 }
-
-
-
-
-
-                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fecha, piezasMantencion);
+                bool nuevoEntrega;
+            //Pregunta si fue entregado para el bool "Entregado" que se usa en mantenciones.
+                while (true)
+                {
+                    Console.WriteLine("¿El vehiculo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
+                   
+                    int opcionEntrega = int.Parse(Console.ReadLine());
+                    if (opcionEntrega == 1) { nuevoEntrega = true; break; }
+                    if (opcionEntrega == 2) { nuevoEntrega = false; break; }
+                    else { Console.WriteLine("Elija una opcion valida."); }
+                }
+                
+                //Se agrega
+                InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fecha, piezasMantencion, nuevoEntrega );
                 info.Add(Mantencion);
-
-            }
+            
         }
 
 
@@ -330,7 +348,6 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Se ha eliminado la mantencion exitosamente.");
             }
         }
-
         private int ObtenerMantencion(string patente)
         {
             foreach (InfoReparacionMantencion repairs in info)
@@ -342,9 +359,6 @@ namespace ProyectoPOO_1
             }
             return -1;
         }
-
-            
-
         private bool ExisteMantencion(string patente)
         {
             foreach(InfoReparacionMantencion A in info)
@@ -357,11 +371,32 @@ namespace ProyectoPOO_1
             return false;
         }
 
+        private void MantencionesNoCompletadas()
+        {
+            int i = 0;
+            Console.Clear();
+            foreach(InfoReparacionMantencion M in info)
+            {
+                if (M.Entregado == false)
+                {
+                    i++;
+                    Console.WriteLine("---------------- Vehiculo " + i + "------------------");
+                    M.ObtenerInformacion();
+                   
+                }
+                else
+                {
+                    Console.WriteLine("Este ");
+                }
+            }
+            Console.ReadKey();  
+        }
 
 
 
 
 
+        
 
 
 
