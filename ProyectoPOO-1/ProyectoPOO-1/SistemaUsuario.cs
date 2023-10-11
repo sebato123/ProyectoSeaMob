@@ -399,47 +399,118 @@ namespace ProyectoPOO_1
             }
         }
         //-------------------VEHICULOS-------------------------------
+        /// <summary>
+        /// Este método permite agregar un nuevo vehículo a una lista de vehículos, solicitando información al usuario.
+        /// </summary>
         private void AgregarVehiculo()
         {
             Console.Clear();
-            Console.WriteLine("Informacion del nuevo vehiculo: ");
+            Console.WriteLine("Información del nuevo vehículo:");
+            Cliente nuevoDueno = null;
 
+            Console.WriteLine("Ingrese la patente del vehiculo: ");
             string patente = Console.ReadLine();
-            if (ExisteVehiculo(patente) == true)
-            {
-                Console.WriteLine("Ese vehiculo ya existe");
 
+            // Verifica si el vehículo ya existe en la lista.
+            if (ExisteVehiculo(patente))
+            {
+                Console.WriteLine("Ese vehículo ya existe");
             }
             else
             {
-                string marca = Console.ReadLine();
-                string modelo = Console.ReadLine(); ;
-                string color = Console.ReadLine(); ;
-                int ano = int.Parse(Console.ReadLine());
+                Console.WriteLine("A continuación deberá ingresar al dueño del vehículo:");
+                bool salir = false;
 
-                Vehiculo vehiculo = new Vehiculo(marca, patente, modelo, color, ano);
-                vehiculos.Add(vehiculo);
+                while (!salir)
+                {
+                    Console.WriteLine("1.- Ingresar cliente nuevo\n2.- Ingresar cliente existente");
+                    int opcion;
+
+                    if (int.TryParse(Console.ReadLine(), out opcion))
+                    {
+                        switch (opcion)
+                        {
+                            case 1:
+                                // Llama al método AgregarCliente() para agregar un nuevo cliente.
+                                AgregarCliente();
+                                nuevoDueno = clientes.Last();
+                                salir = true;
+                                break;
+                            case 2:
+                                Console.WriteLine("Ingrese el rut del dueño del vehículo:");
+                                string rut = Console.ReadLine();
+
+                                // Busca al cliente existente por su rut.
+                                int empleadoIndex = ObtenerEmpleado(rut);
+
+                                if (empleadoIndex == -1)
+                                {
+                                    Console.WriteLine("Ese cliente no existe.");
+                                }
+                                else
+                                {
+                                    nuevoDueno = clientes[empleadoIndex];
+                                    salir = true;
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("Elija una opción válida.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Debe ingresar un número válido.");
+                    }
+                }
+                Console.WriteLine("Se han ingresado los datos del dueño correctamente.");
+
+                Console.WriteLine("Ingrese la marca:");
+                string marca = Console.ReadLine();
+                Console.WriteLine("Ingrese el modelo:");
+                string modelo = Console.ReadLine();
+                Console.WriteLine("Ingrese el color:");
+                string color = Console.ReadLine();
+                Console.WriteLine("Ingrese el año:");
+
+                if (int.TryParse(Console.ReadLine(), out int ano))
+                {
+                    // Crea un nuevo objeto Vehiculo con la información proporcionada y lo agrega a la lista de vehículos.
+                    Vehiculo vehiculo = new Vehiculo(marca, patente, modelo, color, ano, nuevoDueno);
+                    vehiculos.Add(vehiculo);
+                }
+                else
+                {
+                    Console.WriteLine("Año no válido. El vehículo no se agregó.");
+                }
             }
         }
+
+
+        /// <summary>
+        /// Este método permite editar la información de un vehículo existente en la lista de vehículos.
+        /// </summary>
         private void EditarVehiculo()
         {
-
             // Se limpia la consola y se pide el identificador respectivo
             Console.Clear();
-            Console.WriteLine("Ingrese la patente del vehiculo a modificar:");
+            Console.WriteLine("Ingrese la patente del vehículo a modificar:");
             string patente = Console.ReadLine();
-            //Se comprueba si existe el identicador
+
+            // Se comprueba si existe el vehículo con la patente especificada
             int index = ObtenerVehiculo(patente);
+
             if (index < 0)
             {
-                Console.WriteLine("No se ha encontrado el vehiculo.");
+                Console.WriteLine("No se ha encontrado el vehículo.");
             }
             else
             {
-                //Menu para elegir que se desea modificar, se modifica con los SetGet respectivos.
+                // Menú para elegir qué se desea modificar, se realiza a través de los métodos Set y Get respectivos.
                 Console.WriteLine("Elija lo que quiere editar: \n 1.- Patente. \n 2.- Marca. \n 3.- Modelo. \n 4.- Color. \n 5.- Año. \n 6.- Salir");
                 int opcion = int.Parse(Console.ReadLine());
                 bool salir = false;
+
                 while (salir == false)
                 {
                     switch (opcion)
@@ -448,61 +519,99 @@ namespace ProyectoPOO_1
                             Console.WriteLine("Ingrese el nuevo dato:");
                             vehiculos[index].Patente = Console.ReadLine();
                             Console.ReadKey();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 2:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             vehiculos[index].Marca = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 3:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             vehiculos[index].Modelo = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 4:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             vehiculos[index].Color = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 5:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             vehiculos[index].Ano = int.Parse(Console.ReadLine());
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 6:
-                            salir = true; break;
+                            salir = true;
+                            break;
                         default:
-                            Console.WriteLine("Elija una opcion valida."); break;
-                        }
+                            Console.WriteLine("Elija una opción válida.");
+                            break;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Este método permite eliminar un vehículo de la lista de vehículos y, al mismo tiempo, eliminar la información de mantenimiento asociada a ese vehículo.
+        /// </summary>
         private void EliminarVehiculo()
         {
             Console.Clear();
-            Console.WriteLine("Ingrese la patente del vehiculo a eliminar:");
+            Console.WriteLine("Ingrese la patente del vehículo a eliminar, se eliminará la información de mantenimiento asociada:");
             string patente = Console.ReadLine();
+
+            // Busca el vehículo en la lista por su patente.
             int index = ObtenerVehiculo(patente);
+
             if (index < 0)
             {
-                Console.WriteLine("No se ha encontrado el vehiculo.");
+                Console.WriteLine("No se ha encontrado el vehículo.");
             }
             else
             {
+                // Elimina el vehículo de la lista de vehículos.
                 vehiculos.RemoveAt(index);
-                Console.WriteLine("El vehiculo se ha eliminado correctamente");
+
+                // Itera sobre la lista de información de mantenimiento y elimina las entradas asociadas a la patente.
+                for (int i = info.Count - 1; i >= 0; i--)
+                {
+                    if (patente == info[i].Patente)
+                    {
+                        info.RemoveAt(i);
+                    }
+                }
+
+                Console.WriteLine("El vehículo se ha eliminado correctamente junto con su información de mantenimiento asociada.");
             }
         }
 
+
+        /// <summary>
+        /// Este método lista todos los vehículos almacenados en la lista de vehículos, mostrando su información en la consola.
+        /// </summary>
         private void ListarVehiculo()
         {
             int n = 1;
             Console.Clear();
+
+            // Itera a través de la lista de vehículos y muestra la información de cada vehículo en la consola.
             foreach (Vehiculo auto in vehiculos)
             {
-                Console.WriteLine("---------------- Vehiculo " + n + " -----------------");
+                Console.WriteLine("---------------- Vehículo " + n + " -----------------");
                 auto.ObtenerInformacion();
                 n++;
             }
         }
 
+
+        /// <summary>
+        /// Este método busca un vehículo en la lista de vehículos por su número de patente y devuelve el índice del vehículo si se encuentra.
+        /// </summary>
+        /// <param name="patente">La patente del vehículo que se desea buscar.</param>
+        /// <returns>
+        /// El índice del vehículo si se encuentra; de lo contrario, devuelve -1.
+        /// </returns>
         private int ObtenerVehiculo(string patente)
         {
             foreach (Vehiculo auto in vehiculos)
@@ -512,10 +621,17 @@ namespace ProyectoPOO_1
                     return vehiculos.IndexOf(auto);
                 }
             }
-            Console.WriteLine("No se pudo encontrar el vehiculo");
+            Console.WriteLine("No se pudo encontrar el vehículo");
             return -1;
         }
 
+        /// <summary>
+        /// Este método verifica si un vehículo con una patente específica existe en la lista de vehículos.
+        /// </summary>
+        /// <param name="patente">La patente del vehículo que se desea verificar.</param>
+        /// <returns>
+        /// Verdadero (true) si el vehículo con la patente especificada existe en la lista; de lo contrario, falso (false).
+        /// </returns>
         private bool ExisteVehiculo(string patente)
         {
             foreach (Vehiculo auto in vehiculos)
@@ -529,16 +645,22 @@ namespace ProyectoPOO_1
         }
 
 
+
         //------------------------------------------------------------
         //------------------------PARTES  Y PIEZAS ------------------------
 
+        /// <summary>
+        /// Este método permite agregar una nueva pieza o parte a una lista de piezas, solicitando información al usuario.
+        /// </summary>
         private void AgregarPiezas()
         {
             Console.Clear();
-            Console.WriteLine("Informacion de la nueva Pieza/Parte");
+            Console.WriteLine("Información de la nueva Pieza/Parte");
 
-            Console.WriteLine("Ingrese el identificador unico de la pieza:");
+            Console.WriteLine("Ingrese el identificador único de la pieza:");
             string identificadorUnico = Console.ReadLine();
+
+            // Verifica si la pieza ya existe en la lista.
             if (ExistePieza(identificadorUnico) == true)
             {
                 Console.WriteLine("Esa pieza ya existe");
@@ -552,29 +674,36 @@ namespace ProyectoPOO_1
                 Console.WriteLine("Ingrese el costo unitario de la pieza:");
                 string costoUnitario = Console.ReadLine();
 
+                // Crea un nuevo objeto Piezas con la información proporcionada y lo agrega a la lista de piezas.
                 Piezas pieza = new Piezas(identificadorUnico, marcaPieza, proveedor, costoUnitario);
                 piezas.Add(pieza);
             }
         }
 
+        /// <summary>
+        /// Este método permite editar la información de una pieza o parte existente en una lista de piezas, solicitando al usuario la información a modificar.
+        /// </summary>
         private void EditarPiezas()
         {
             // Se limpia la consola y se pide el identificador respectivo
             Console.Clear();
-            Console.WriteLine("Ingrese el identificador unico de la pieza a modificar:");
+            Console.WriteLine("Ingrese el identificador único de la pieza a modificar:");
             string id = Console.ReadLine();
-            //Se comprueba si existe el identicador
+
+            // Se comprueba si existe la pieza con el identificador único especificado
             int index = ObtenerPiezas(id);
+
             if (index < 0)
             {
                 Console.WriteLine("No se ha encontrado la pieza.");
             }
             else
             {
-                //Menu para elegir que se desea modificar, se modifica con los SetGet respectivos.
-                Console.WriteLine("Elija lo que quiere editar: \n 1.- Identificador Unico. \n 2.- Marca. \n 3.- Proveedor. \n 4.- Costo Unitario. \n 5.- Salir");
+                // Menú para elegir qué se desea modificar, se realiza a través de los métodos Set y Get respectivos.
+                Console.WriteLine("Elija lo que quiere editar: \n 1.- Identificador Único. \n 2.- Marca. \n 3.- Proveedor. \n 4.- Costo Unitario. \n 5.- Salir");
                 int opcion = int.Parse(Console.ReadLine());
                 bool salir = false;
+
                 while (salir == false)
                 {
                     switch (opcion)
@@ -583,34 +712,43 @@ namespace ProyectoPOO_1
                             Console.WriteLine("Ingrese el nuevo dato:");
                             piezas[index].IdentificadorUnico = Console.ReadLine();
                             Console.ReadKey();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 2:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             piezas[index].Marca = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 3:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             piezas[index].Proveedor = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 4:
                             Console.WriteLine("Ingrese el nuevo dato:");
                             piezas[index].CostoUnitario = Console.ReadLine();
-                            salir = true; break;
+                            salir = true;
+                            break;
                         case 5:
-                            salir = true; break;
+                            salir = true;
+                            break;
                         default:
-                            Console.WriteLine("Elija una opcion valida."); break;
+                            Console.WriteLine("Elija una opción válida.");
+                            break;
                     }
                 }
             }
         }
-
+        /// <summary>
+        /// Este método permite eliminar una pieza o parte de una lista de piezas, así como eliminar las referencias de la pieza en la información de mantenimiento asociada.
+        /// </summary>
         private void EliminarPiezas()
         {
-
             Console.Clear();
-            Console.WriteLine("Ingrese el identificador unico de la pieza/parte a eliminar:");
+            Console.WriteLine("Ingrese el identificador único de la pieza/parte a eliminar, se eliminarán de la información de mantenimiento asociada:");
             string id = Console.ReadLine();
+
+            // Se comprueba si existe la pieza con el identificador único especificado
             int index = ObtenerPiezas(id);
 
             if (index < 0)
@@ -619,16 +757,36 @@ namespace ProyectoPOO_1
             }
             else
             {
+                // Elimina la pieza de la lista de piezas.
                 piezas.RemoveAt(index);
+
+                // Itera sobre la lista de información de mantenimiento y elimina las referencias de la pieza en la lista de piezas de cada entrada.
+                foreach (InfoReparacionMantencion a in info)
+                {
+                    foreach (Piezas b in a.ListaPiezas)
+                    {
+                        if (id == b.IdentificadorUnico)
+                        {
+                            a.ListaPiezas.Remove(b);
+                            break; // Se rompe el bucle después de eliminar la pieza para evitar problemas de modificación.
+                        }
+                    }
+                }
+
                 Console.WriteLine("La pieza se ha eliminado correctamente");
+                Console.ReadKey();
             }
         }
 
-
+        /// <summary>
+        /// Este método lista todas las piezas o partes almacenadas en la lista de piezas, mostrando su información en la consola.
+        /// </summary>
         private void ListarPiezas()
         {
             int n = 1;
             Console.Clear();
+
+            // Itera a través de la lista de piezas y muestra la información de cada pieza en la consola.
             foreach (Piezas pieza in piezas)
             {
                 Console.WriteLine("---------------- Pieza " + n + " -----------------");
@@ -637,6 +795,14 @@ namespace ProyectoPOO_1
             }
         }
 
+
+        /// <summary>
+        /// Este método busca una pieza o parte en la lista de piezas por su identificador único y devuelve el índice de la pieza si se encuentra.
+        /// </summary>
+        /// <param name="id">El identificador único de la pieza que se desea buscar.</param>
+        /// <returns>
+        /// El índice de la pieza si se encuentra; de lo contrario, devuelve -1.
+        /// </returns>
         private int ObtenerPiezas(string id)
         {
             foreach (Piezas pieza in piezas)
@@ -650,6 +816,13 @@ namespace ProyectoPOO_1
             return -1;
         }
 
+        /// <summary>
+        /// Este método verifica si una pieza o parte con un identificador único específico existe en la lista de piezas.
+        /// </summary>
+        /// <param name="id">El identificador único de la pieza que se desea verificar.</param>
+        /// <returns>
+        /// Verdadero (true) si la pieza con el identificador único especificado existe en la lista; de lo contrario, falso (false).
+        /// </returns>
         private bool ExistePieza(string id)
         {
             foreach (Piezas pieza in piezas)
@@ -666,22 +839,25 @@ namespace ProyectoPOO_1
 
         //----------------------------------MANTENCIONES-------------------------
 
+        /// <summary>
+        /// Este método permite agregar información de una nueva mantención, solicitando la información necesaria al usuario.
+        /// </summary>
         private void AgregarMantencion()
         {
-            //Se limpia la lista de piezas de mantencion para reutilizarla.
+            // Se limpia la lista de piezas de mantención para reutilizarla.
             piezasMantencion.Clear();
             Console.Clear();
-            Console.WriteLine("A continuacion ingrese la informacion correspondiente a la mantencion:");
+            Console.WriteLine("A continuación, ingrese la información correspondiente a la mantención:");
 
-            //Verifica si una mantencion ya tiene esa patente
+            // Verifica si una mantención ya tiene esa patente
             string patente;
             while (true)
             {
-                Console.WriteLine("Ingrese la patente del vehiculo a realizar la mantencion:");
+                Console.WriteLine("Ingrese la patente del vehículo a realizar la mantención:");
                 patente = Console.ReadLine();
                 if (ExisteMantencion(patente) == true)
                 {
-                    Console.WriteLine("Ese vehiculo ya tiene una mantencion designada");
+                    Console.WriteLine("Ese vehículo ya tiene una mantención designada");
                 }
                 else
                 {
@@ -689,12 +865,12 @@ namespace ProyectoPOO_1
                 }
             }
 
-            //Se pide el empleado a cargo.
-            Console.WriteLine("Ingrese el empleado a cargo de la mantencion:");
-            bool salirmantencion = false;
-            while (salirmantencion == false)
+            // Se pide el empleado a cargo.
+            Console.WriteLine("Ingrese el empleado a cargo de la mantención:");
+            bool salirMantencion = false;
+            while (salirMantencion == false)
             {
-                //Mini menu para ingresar un empleado nuevo o ya existente
+                // Mini menú para ingresar un empleado nuevo o ya existente.
                 Console.WriteLine("1.- Ingresar empleado existente. \n 2.- Ingresar empleado nuevo");
                 int opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
@@ -703,17 +879,21 @@ namespace ProyectoPOO_1
                         Console.WriteLine("Ingrese el rut del empleado");
                         string rut = Console.ReadLine();
                         int index = ObtenerEmpleado(rut);
-                        if (index < 0) { Console.WriteLine("No se encontro el empleado."); break; }
+                        if (index < 0)
+                        {
+                            Console.WriteLine("No se encontró el empleado.");
+                            break;
+                        }
                         nuevoEmpleado = empleados[index];
-                        salirmantencion = true;
+                        salirMantencion = true;
                         break;
                     case 2:
                         AgregarEmpleado();
                         nuevoEmpleado = empleados.Last();
-                        salirmantencion = true;
+                        salirMantencion = true;
                         break;
                     default:
-                        Console.WriteLine("Elija una opcion valida.");
+                        Console.WriteLine("Elija una opción válida.");
                         break;
                 }
                 Console.Clear();
@@ -721,22 +901,23 @@ namespace ProyectoPOO_1
             Console.WriteLine("Ingrese el kilometraje");
             string kilometraje = Console.ReadLine();
 
-            Console.WriteLine("Ingrese la descripcion de la inspeccion visual");
+            Console.WriteLine("Ingrese la descripción de la inspección visual");
             string inspeccion = Console.ReadLine();
 
             Console.WriteLine("Ingrese el trabajo a realizar:");
             string trabajo = Console.ReadLine();
 
-            //Ingresar fecha de ingreso en formato año mes dia.
+            // Ingresar fecha de ingreso en formato año mes día.
             string fechaIngreso;
             while (true)
             {
-                Console.WriteLine("Ingrese la fecha de ingreso del vehiculo en formato AAAA-MM-DD:");
+                Console.WriteLine("Ingrese la fecha de ingreso del vehículo en formato AAAA-MM-DD:");
                 fechaIngreso = Console.ReadLine();
 
                 if (DateTime.TryParseExact(fechaIngreso, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
                 {
-                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd")); break;
+                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd"));
+                    break;
                 }
                 else
                 {
@@ -744,12 +925,11 @@ namespace ProyectoPOO_1
                 }
             }
 
-
-            //While para crear un menu donde agregar las piezas a utilizar.
-            salirmantencion = false;
-            while (salirmantencion == false)
+            // While para crear un menú donde agregar las piezas a utilizar.
+            salirMantencion = false;
+            while (salirMantencion == false)
             {
-                Console.WriteLine("A continuacion debera ingresar las partes/piezas que serán utilizadas en la mantencion");
+                Console.WriteLine("A continuación deberá ingresar las partes/piezas que serán utilizadas en la mantención");
                 Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Terminar de elegir piezas");
                 int opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
@@ -760,60 +940,83 @@ namespace ProyectoPOO_1
                         piezasMantencion.Add(ultimaPieza);
                         break;
                     case 2:
-                        Console.WriteLine("Ingrese el identificador unico de la pieza:");
+                        Console.WriteLine("Ingrese el identificador único de la pieza:");
                         string id = Console.ReadLine();
                         int index = ObtenerPiezas(id);
-                        if (index < 0) { Console.WriteLine("No se encontro la pieza."); break; }
+                        if (index < 0)
+                        {
+                            Console.WriteLine("No se encontró la pieza.");
+                            break;
+                        }
                         Piezas pieza1 = piezas[index];
                         piezasMantencion.Add(pieza1);
                         break;
                     case 3:
-                        salirmantencion = true;
+                        salirMantencion = true;
                         break;
                     default:
-                        Console.WriteLine("Elija una opcion valida");
+                        Console.WriteLine("Elija una opción válida");
                         break;
                 }
             }
+
             bool nuevoEntrega;
-            //Pregunta si fue entregado para el bool "Entregado" que se usa en mantenciones.
+            // Pregunta si fue entregado para el bool "Entregado" que se usa en mantenciones.
             while (true)
             {
-                Console.WriteLine("¿El vehiculo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
+                Console.WriteLine("¿El vehículo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
 
                 int opcionEntrega = int.Parse(Console.ReadLine());
-                if (opcionEntrega == 1) { nuevoEntrega = true; break; }
-                if (opcionEntrega == 2) { nuevoEntrega = false; break; }
-                else { Console.WriteLine("Elija una opcion valida."); }
+                if (opcionEntrega == 1)
+                {
+                    nuevoEntrega = true;
+                    break;
+                }
+                if (opcionEntrega == 2)
+                {
+                    nuevoEntrega = false;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Elija una opción válida.");
+                }
             }
 
-            //Se agrega
+            // Se agrega la información de la mantención.
             InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado);
             info.Add(Mantencion);
-
         }
 
 
+
+        /// <summary>
+        /// Este método permite editar la información de una mantención existente, solicitando la identificación y ofreciendo opciones para editar sus atributos.
+        /// </summary>
         private void EditarMantencion()
         {
             // Se limpia la consola y se pide el identificador respectivo
             Console.Clear();
-            Console.WriteLine("Ingrese la patente de la mantencion a modificar:");
+            Console.WriteLine("Ingrese la patente de la mantención a modificar:");
             string id = Console.ReadLine();
-            //Se comprueba si existe el identicador
+
+            // Se comprueba si existe el identificador
             int index = ObtenerMantencion(id);
+
             if (index < 0)
             {
-                Console.WriteLine("No se ha encontrado la mantencion.");
+                Console.WriteLine("No se ha encontrado la mantención.");
             }
             else
             {
-                //Menu para elegir que se desea modificar, se modifica con los SetGet respectivos.
-                Console.WriteLine("Elija lo que quiere editar: \n 1.- Patente. \n 2.- Kilometraje. \n 3.- Inspeccion Visual. \n 4.- Trabajo. \n 5.- Fecha Ingreso");
+                // Menú para elegir qué se desea modificar, se modifica con los SetGet respectivos.
+                Console.WriteLine("Elija lo que quiere editar: \n 1.- Patente. \n 2.- Kilometraje. \n 3.- Inspección Visual. \n 4.- Trabajo. \n 5.- Fecha Ingreso");
                 Console.WriteLine("6.- Lista de Piezas. \n 7.- Fecha de Entrega. \n 8.- Empleado a cargo. \n 9.- Salir");
+
                 string auxiliar;
                 int opcion = int.Parse(Console.ReadLine());
                 bool salir = false;
+
                 while (salir == false)
                 {
                     switch (opcion)
@@ -838,12 +1041,13 @@ namespace ProyectoPOO_1
                         case 5:
                             while (true)
                             {
-                                Console.WriteLine("Ingrese la fecha de ingreso del vehiculo en formato AAAA-MM-DD:");
+                                Console.WriteLine("Ingrese la fecha de ingreso del vehículo en formato AAAA-MM-DD:");
                                 auxiliar = Console.ReadLine();
 
                                 if (DateTime.TryParseExact(auxiliar, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
                                 {
-                                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd")); break;
+                                    Console.WriteLine("Fecha ingresada válida: " + fecha.ToString("yyyy-MM-dd"));
+                                    break;
                                 }
                                 else
                                 {
@@ -857,91 +1061,98 @@ namespace ProyectoPOO_1
                             {
                                 string idAuxiliar;
                                 int indexAuxiliar;
-                                Console.WriteLine("A continuacion podra editar las partes/piezas que serán utilizadas en la mantencion");
+                                Console.WriteLine("A continuación podrá editar las partes/piezas que serán utilizadas en la mantención");
                                 Console.WriteLine("1.- Ingresar pieza nueva. \n 2.- Ingresar pieza existente. \n 3.- Eliminar piezas.\n 4.- Editar piezas. \n 5.- Salir");
                                 opcion = int.Parse(Console.ReadLine());
+
                                 switch (opcion)
                                 {
                                     case 1:
                                         AgregarPiezas();
                                         Piezas ultimaPieza = piezas.Last();
                                         piezasMantencion.Add(ultimaPieza);
-                                        salir = true;  break;
+                                        salir = true; break;
                                     case 2:
-                                        Console.WriteLine("Ingrese el identificador unico de la pieza:");
+                                        Console.WriteLine("Ingrese el identificador único de la pieza:");
                                         idAuxiliar = Console.ReadLine();
-                                        indexAuxiliar = ObtenerPiezas(id);
-                                        if (index < 0) { Console.WriteLine("No se encontro la pieza."); break; }
-                                        Piezas pieza1 = piezas[index];
+                                        indexAuxiliar = ObtenerPiezas(idAuxiliar);
+                                        if (indexAuxiliar < 0)
+                                        {
+                                            Console.WriteLine("No se encontró la pieza.");
+                                            break;
+                                        }
+                                        Piezas pieza1 = piezas[indexAuxiliar];
                                         piezasMantencion.Add(pieza1);
-                                        salir = true;  break;
+                                        salir = true; break;
                                     case 3:
-                                        Console.WriteLine("Ingrese el identificador unico de la pieza:");
+                                        Console.WriteLine("Ingrese el identificador único de la pieza:");
                                         idAuxiliar = Console.ReadLine();
-                                        indexAuxiliar = ObtenerPiezas(id);
-                                        if (index < 0) { Console.WriteLine("No se encontro la pieza."); break; }
-                                        piezasMantencion.RemoveAt(index);
-                                        salir = true;  break;
-
+                                        indexAuxiliar = ObtenerPiezas(idAuxiliar);
+                                        if (indexAuxiliar < 0)
+                                        {
+                                            Console.WriteLine("No se encontró la pieza.");
+                                            break;
+                                        }
+                                        piezasMantencion.RemoveAt(indexAuxiliar);
+                                        salir = true; break;
                                     case 4:
                                         // Se limpia la consola y se pide el identificador respectivo
                                         Console.Clear();
-                                        Console.WriteLine("Ingrese el identificador unico de la pieza a modificar:");
+                                        Console.WriteLine("Ingrese el identificador único de la pieza a modificar:");
                                         idAuxiliar = Console.ReadLine();
-                                        //Se comprueba si existe el identicador
-                                        indexAuxiliar = ObtenerPiezas(id);
-                                        if (index < 0)
+                                        indexAuxiliar = ObtenerPiezas(idAuxiliar);
+                                        if (indexAuxiliar < 0)
                                         {
                                             Console.WriteLine("No se ha encontrado la pieza.");
                                         }
                                         else
                                         {
-                                            //Menu para elegir que se desea modificar, se modifica con los SetGet respectivos.
-                                            Console.WriteLine("Elija lo que quiere editar: \n 1.- Identificador Unico. \n 2.- Marca. \n 3.- Proveedor. \n 4.- Costo Unitario. \n 5.- Salir");
+                                            // Menú para elegir qué se desea modificar, se modifica con los SetGet respectivos.
+                                            Console.WriteLine("Elija lo que quiere editar: \n 1.- Identificador Único. \n 2.- Marca. \n 3.- Proveedor. \n 4.- Costo Unitario. \n 5.- Salir");
                                             opcion = int.Parse(Console.ReadLine());
                                             salir = false;
+
                                             while (salir == false)
                                             {
                                                 switch (opcion)
                                                 {
                                                     case 1:
                                                         Console.WriteLine("Ingrese el nuevo dato:");
-                                                        piezasMantencion[index].IdentificadorUnico = Console.ReadLine();
+                                                        piezasMantencion[indexAuxiliar].IdentificadorUnico = Console.ReadLine();
                                                         Console.ReadKey();
                                                         salir = true; break;
                                                     case 2:
                                                         Console.WriteLine("Ingrese el nuevo dato:");
-                                                        piezasMantencion[index].Marca = Console.ReadLine();
+                                                        piezasMantencion[indexAuxiliar].Marca = Console.ReadLine();
                                                         salir = true; break;
                                                     case 3:
                                                         Console.WriteLine("Ingrese el nuevo dato:");
-                                                        piezasMantencion[index].Proveedor = Console.ReadLine();
+                                                        piezasMantencion[indexAuxiliar].Proveedor = Console.ReadLine();
                                                         salir = true; break;
                                                     case 4:
                                                         Console.WriteLine("Ingrese el nuevo dato:");
-                                                        piezasMantencion[index].CostoUnitario = Console.ReadLine();
+                                                        piezasMantencion[indexAuxiliar].CostoUnitario = Console.ReadLine();
                                                         salir = true; break;
                                                     case 5:
                                                         salir = true; break;
                                                     default:
-                                                        Console.WriteLine("Elija una opcion valida."); break;
+                                                        Console.WriteLine("Elija una opción válida."); break;
                                                 }
                                             }
-                                        } break;
-                                    
+                                        }
+                                        break;
                                     case 5:
                                         salir = true; break;
                                     default:
-                                        Console.WriteLine("Elija una opcion valida");
+                                        Console.WriteLine("Elija una opción válida");
                                         break;
                                 }
-                             
-                            } break;
-
+                            }
+                            break;
                         case 7:
-                            if (info[index].Entregado == false)
+                            if (!info[index].Entregado)
                             {
-                                Console.WriteLine("Este vehiculo no ha sido entregado ¿Desea establecerlo como entregado? Si/No");
+                                Console.WriteLine("Este vehículo no ha sido entregado. ¿Desea establecerlo como entregado? Si/No");
                                 string entrega = Console.ReadLine();
                                 if (entrega == "Si" || entrega == "si")
                                 {
@@ -949,7 +1160,7 @@ namespace ProyectoPOO_1
 
                                     while (true)
                                     {
-                                        Console.WriteLine("Ingrese la fecha de entrega del vehiculo en formato AAAA-MM-DD:");
+                                        Console.WriteLine("Ingrese la fecha de entrega del vehículo en formato AAAA-MM-DD:");
                                         auxiliar = Console.ReadLine();
 
                                         if (DateTime.TryParseExact(auxiliar, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
@@ -971,11 +1182,11 @@ namespace ProyectoPOO_1
                             }
                             else
                             {
-                                Console.WriteLine("El vehiculo fue entregado el: " + info[index].FechaEntrega);
+                                Console.WriteLine("El vehículo fue entregado el: " + info[index].FechaEntrega);
                                 Console.WriteLine("1.- Modificar fecha entrega. 2.- Cancelar entrega. 3.- Salir");
                                 opcion = int.Parse(Console.ReadLine());
-
                                 salir = false;
+
                                 while (salir == false)
                                 {
                                     switch (opcion)
@@ -983,7 +1194,7 @@ namespace ProyectoPOO_1
                                         case 1:
                                             while (true)
                                             {
-                                                Console.WriteLine("Ingrese la fecha de entrega del vehiculo en formato AAAA-MM-DD:");
+                                                Console.WriteLine("Ingrese la fecha de entrega del vehículo en formato AAAA-MM-DD:");
                                                 auxiliar = Console.ReadLine();
 
                                                 if (DateTime.TryParseExact(auxiliar, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fecha))
@@ -1006,39 +1217,104 @@ namespace ProyectoPOO_1
                                         case 3:
                                             salir = true; break;
                                         default:
-                                            Console.WriteLine("Elija una opcion valida."); break;
+                                            Console.WriteLine("Elija una opción válida."); break;
                                     }
                                 }
-
                             }
                             break;
-
                         case 8:
                             Console.WriteLine("El empleado a cargo es: " + info[index].Empleado.Nombre);
-
                             salir = false;
+
                             while (salir == false)
                             {
+                                Console.WriteLine("1.- Cambiar el empleado a cargo. \n 2.- Modificar el empleado a cargo.\n 3.- Salir");
+                                opcion = int.Parse(Console.ReadLine());
 
+                                switch (opcion)
+                                {
+                                    case 1:
+                                        Console.WriteLine("1.- Cambiar a empleado existente. \n 2.- Cambiar a empleado nuevo.\n 3.- Salir.");
+                                        opcion = int.Parse(Console.ReadLine());
 
+                                        switch (opcion)
+                                        {
+                                            case 1:
+                                                Console.WriteLine("Ingrese el rut del empleado");
+                                                string rut = Console.ReadLine();
+                                                int indexAuxiliar = ObtenerEmpleado(rut);
 
+                                                if (index < 0)
+                                                {
+                                                    Console.WriteLine("No se encontró el empleado.");
+                                                    break;
+                                                }
 
+                                                info[index].Empleado = empleados[indexAuxiliar];
+                                                salir = true;
+                                                break;
+                                            case 2:
+                                                AgregarEmpleado();
+                                                info[index].Empleado = empleados.Last();
+                                                salir = true;
+                                                break;
+                                            case 3:
+                                                salir = true; break;
+                                            default:
+                                                Console.WriteLine("Elija una opción válida.");
+                                                break;
+                                        }
+
+                                        Console.Clear();
+                                        break;
+                                    case 2:
+                                        Console.Clear();
+                                        info[index].Empleado.ObtenerInfoEmpleado();
+                                        // Menú para elegir qué se desea modificar, se modifica con los SetGet respectivos.
+                                        Console.WriteLine("Elija lo que quiere editar: \n 1.- Rut. \n 2.- Razon Social. \n 3.- Telefono. \n 4.- Salir");
+                                        opcion = int.Parse(Console.ReadLine());
+                                        salir = false;
+
+                                        while (salir == false)
+                                        {
+                                            switch (opcion)
+                                            {
+                                                case 1:
+                                                    Console.WriteLine("Ingrese el nuevo dato:");
+                                                    info[index].Empleado.RutEmpleado = Console.ReadLine();
+                                                    Console.ReadKey();
+                                                    salir = true; break;
+                                                case 2:
+                                                    Console.WriteLine("Ingrese el nuevo dato:");
+                                                    info[index].Empleado.Nombre = Console.ReadLine();
+                                                    salir = true; break;
+                                                case 3:
+                                                    Console.WriteLine("Ingrese el nuevo dato:");
+                                                    info[index].Empleado.TelefonoEmpleado = Console.ReadLine();
+                                                    salir = true; break;
+                                                case 4:
+                                                    salir = true; break;
+                                                default:
+                                                    Console.WriteLine("Elija una opción válida."); break;
+                                            }
+                                        }
+                                        break;
+                                    case 3:
+                                        salir = true; break;
+                                    default:
+                                        Console.WriteLine("Elija una opción válida."); break;
+                                }
                             }
-
-
-
                             break;
                         case 9:
                             salir = true; break;
                         default:
-                            Console.WriteLine("Elija una opcion valida."); break;
+                            Console.WriteLine("Elija una opción válida."); break;
                     }
                 }
             }
-
-
-
         }
+
 
         private void EliminarMantencion()
         {
@@ -1106,7 +1382,7 @@ namespace ProyectoPOO_1
             foreach (InfoReparacionMantencion M in info)
             int j = 0;
             //Si no hay mantenciones
-            if(info.Count <= 0)
+            if (info.Count <= 0)
             {
                 Console.WriteLine("No hay mantenciones registradas.");
             }
@@ -1131,7 +1407,7 @@ namespace ProyectoPOO_1
                     Console.WriteLine("Todos los vehiculos registrados fueron entregados");
                 }
             }
-            
+
             Console.ReadKey();
         }
 
@@ -1156,7 +1432,7 @@ namespace ProyectoPOO_1
             int j = 0;
             while (true)
             {
-                
+
                 foreach (InfoReparacionMantencion y in info)
                 {
                     //Se comprueba si la fecha de ingreso de y es igual al index i de ordenIngreso
@@ -1174,7 +1450,7 @@ namespace ProyectoPOO_1
                 {
                     break;
                 }
-                
+
             }
             Console.ReadKey();
         }
@@ -1233,7 +1509,7 @@ namespace ProyectoPOO_1
                         {
                             Console.WriteLine("----------- Mantencion " + (i + 1) + "-------------");
                             z.ObtenerInformacion();
-                           Console.WriteLine("La mantencion ha durado: " + z.DiferenciaFechas() + " días.");
+                            Console.WriteLine("La mantencion ha durado: " + z.DiferenciaFechas() + " días.");
                             i++;
                         }
                     }
@@ -1251,7 +1527,7 @@ namespace ProyectoPOO_1
                         }
                     }
                     Console.ReadKey();
-                    mantenciones.Clear();   
+                    mantenciones.Clear();
                 }
             }
 
@@ -1285,11 +1561,16 @@ namespace ProyectoPOO_1
         {
             Console.Clear();
             Console.WriteLine("-------------------IDVRV-------------------");
-            Console.WriteLine("Ingrese el rut del Cliente a mostrar:");
-            string rutCliente = Console.ReadLine();
+            int n = 1;
+            Console.Clear();
 
-            int index = ObtenerCliente(rutCliente);
-            clientes[index].ObtenerInfoCliente();
+            // Itera a través de la lista de piezas y muestra la información de cada pieza en la consola.
+            foreach (Cliente a in clientes)
+            {
+                Console.WriteLine("---------------- Cliente " + n + " -----------------");
+                a.ObtenerInfoCliente();
+                n++;
+            }
 
         }
 
@@ -1302,22 +1583,36 @@ namespace ProyectoPOO_1
                     return clientes.IndexOf(cliente);
                 }
             }
-            return 0;
+            return -1;
         }
 
         private void EliminarCliente()
         {
             Console.Clear();
             Console.WriteLine("-------------------IDVRV-------------------");
-            Console.WriteLine("Ingrese el rut del Cliente para eliminarlo");
+            Console.WriteLine("Ingrese el rut del Cliente para eliminarlo, se eliminara el vehiculo asociado y la mantencion asociada.");
             string rutCliente = Console.ReadLine();
-
-            Cliente clienteAEliminar = clientes.Find(cliente => cliente.RutCliente == rutCliente);
-
-            if (clienteAEliminar != null)
+            int index = ObtenerCliente(rutCliente);
+            if (index >= 0)
             {
                 // Elimina el cliente de la lista
-                clientes.Remove(clienteAEliminar);
+                clientes.RemoveAt(index);
+                foreach(Vehiculo a in vehiculos)
+                {
+                    if (a.Dueno == clientes[index])
+                    {
+                        foreach(InfoReparacionMantencion b in info)
+                        {
+                            if (a.Patente == b.Patente)
+                            {
+                                info.Remove(b);
+                            }
+                        }
+                        vehiculos.Remove(a);
+                    }
+                }
+               
+
                 Console.WriteLine("Cliente eliminado con éxito.");
             }
             else
