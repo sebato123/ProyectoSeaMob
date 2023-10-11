@@ -9,6 +9,7 @@ namespace ProyectoPOO_1
 
     internal class Vehiculo
     {
+        private Cliente dueno;
         private string marca;
         private string patente;
         private string modelo;
@@ -17,18 +18,23 @@ namespace ProyectoPOO_1
 
 
         //Constructor
-        public Vehiculo(string nuevoMarca, string nuevoPatente, string nuevoModelo, string nuevoColor, int nuevoAno)
+        public Vehiculo(string nuevoMarca, string nuevoPatente, string nuevoModelo, string nuevoColor, int nuevoAno, Cliente nuevoDueno)
         {
             marca = nuevoMarca;
             patente = nuevoPatente;
             modelo = nuevoModelo;
             color = nuevoColor;
             ano = nuevoAno;
+            dueno = nuevoDueno;
         }
 
         //Setters y Getters
         //----------------------------------------
-
+        public Cliente Dueno
+        {
+            set { dueno = value; }
+            get { return dueno; }
+        }
         public string Marca
         {
             set { marca = value; }
@@ -62,6 +68,7 @@ namespace ProyectoPOO_1
 
         public void ObtenerInformacion()
         {
+            Console.WriteLine("El dueño del vehiculo es: " + dueno.RazonSocial);
             Console.WriteLine("La patente es: " + patente);
             Console.WriteLine("La marca es: " + marca);
             Console.WriteLine("El modelo es: " + modelo);
