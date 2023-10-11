@@ -34,7 +34,7 @@ namespace ProyectoPOO_1
         public void Sistema()
         {
             bool salir = false;
-
+            int opcion = 0;
             while (salir == false)
             {
                 Console.Clear();
@@ -67,7 +67,7 @@ namespace ProyectoPOO_1
 
                 Console.WriteLine("10. Salir");
 
-                int opcion;
+                
                 bool volverAlMenu = false;
                 if (int.TryParse(Console.ReadLine(), out opcion))
                 {
