@@ -1494,6 +1494,7 @@ namespace ProyectoPOO_1
                 int j = 0;
                 while (true)
                 {
+<<<<<<< Updated upstream
                     //Se vuelve a poner i en 0          
                     if (j >= orden.Count) // Si j es mayor al Count de orden, significa que ya se revisaron todos los elementos de orden.
                     {
@@ -1514,6 +1515,79 @@ namespace ProyectoPOO_1
                     j++;
 
                     //Imprimir mantenciones no terminadas)?
+=======
+                    if (ordenIngreso.Count == 0)
+                    {
+                        Console.WriteLine("No hay mantenciones entregadas."); break;
+                    }
+                    else
+                    {
+
+                        foreach (InfoReparacionMantencion y in info)
+                        {
+                            // Se comprueba si la fecha de ingreso de y es igual al índice i de ordenIngreso.
+                            if (y.FechaIngreso == ordenIngreso[i])
+                            {
+                                // Se imprime la información del vehículo y se incrementa i.
+                                Console.WriteLine("----------- Vehiculo " + (i + 1) + "-------------");
+                                y.ObtenerInformacion();
+                                i++;
+                            }
+                        }
+                        j++;
+
+                        // Se verifica si j es mayor o igual a la cantidad de elementos de ordenIngreso.
+                        // Si es igual, se rompe el ciclo.
+                        if (j >= ordenIngreso.Count - 1)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+
+
+        /// <summary>
+        /// Lista y muestra en la consola a todos los empleados con sus mantenciones o reparaciones realizadas, ordenadas por duración de la mantención.
+        /// </summary>
+        /// <remarks>
+        /// Este método muestra en la consola a todos los empleados registrados con sus respectivas mantenciones o reparaciones realizadas.
+        /// Las mantenciones se ordenan por su duración, de menor a mayor. Si no hay empleados registrados, muestra un mensaje indicando que no hay empleados.
+        /// </remarks>
+        private void EmpleadosMantenciones()
+        {
+            Console.Clear();
+
+            if (empleados.Count == 0)
+            {
+                Console.WriteLine("No hay empleados registrados.");
+            }
+            else
+            {
+                Console.WriteLine("A continuación se listarán todos los empleados, con sus mantenciones o reparaciones realizadas, ordenadas por duración de la mantención.");
+
+                foreach (Empleado x in empleados)
+                {
+                    // Se crean dos listas que se usarán para ordenar los datos.
+                    List<InfoReparacionMantencion> mantenciones = new List<InfoReparacionMantencion>();
+                    List<InfoReparacionMantencion> mantencionesOrdenadas = new List<InfoReparacionMantencion>();
+                    List<int> orden = new List<int>();
+
+                    // Se agregan las mantenciones que corresponden al empleado a la lista mantenciones.
+                    foreach (InfoReparacionMantencion y in info)
+                    {
+                        if (y.Empleado == x)
+                        {
+                            mantenciones.Add(y);
+                        }
+                    }
+
+                    // Se revisa si el vehículo fue entregado; de ser así, se llama a DiferenciaFechas y se agrega a la lista orden.
+>>>>>>> Stashed changes
                     foreach (InfoReparacionMantencion w in mantenciones)
                     {
                         Console.WriteLine("Las siguientes vehiculos no fueron entregados.");
@@ -1524,8 +1598,50 @@ namespace ProyectoPOO_1
                             i++;
                         }
                     }
+<<<<<<< Updated upstream
                     Console.ReadKey();
                     mantenciones.Clear();
+=======
+
+                    // Se ordenan las diferencias de días de menor a mayor.
+                    orden.OrderBy(diferencia => diferencia).ToList();
+
+                    // Se imprime el nombre del empleado, se crean las variables i y j y se inician en 0.
+                    Console.Write("---- " + x.Nombre + " ----\n");
+                    int i = 0;
+                    int j = 0;
+
+                    while (true)
+                    {
+                        // Se vuelve a poner i en 0.
+                        if (j >= orden.Count) // Si j es mayor al Count de orden, significa que ya se revisaron todos los elementos de orden.
+                        {
+                            break;
+                        }
+
+                        foreach (InfoReparacionMantencion z in mantencionesOrdenadas)
+                        {
+                            // Se revisa si el elemento i de orden es igual a la diferencia de cualquier mantención.
+                            if (z.DiferenciaFechas() == orden[i])
+                            {
+                                Console.WriteLine("----------- Mantencion " + (i + 1) + "-------------");
+                                z.ObtenerInformacion();
+                                Console.WriteLine("La mantención ha durado: " + z.DiferenciaFechas() + " días.");
+                                i++;
+                            }
+                        }
+                        j++;
+
+                        foreach (InfoReparacionMantencion p in mantenciones)
+                        {
+                            if(p.Entregado == false)
+                            {
+                                p.ObtenerInformacion();
+                            }
+                        }
+                        mantenciones.Clear();
+                    }
+>>>>>>> Stashed changes
                 }
             }
 
