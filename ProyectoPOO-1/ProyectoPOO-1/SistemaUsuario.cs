@@ -1654,9 +1654,19 @@ namespace ProyectoPOO_1
                                 i++;
                             }
                         }
+                        foreach (InfoReparacionMantencion p in mantenciones)
+                        {
+                            if (p.Entregado == false)
+                            {
+                                p.ObtenerInformacion();
+                            }
+
+                        }
                         j++;
-                        mantenciones.Clear();
+                                      
                     }
+                    mantenciones.Clear();
+                    mantencionesOrdenadas.Clear();
                 }
             }
 
