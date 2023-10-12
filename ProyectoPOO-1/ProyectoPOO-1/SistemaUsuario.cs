@@ -1039,9 +1039,6 @@ namespace ProyectoPOO_1
             }
             Console.ReadKey();
         }
-
-
-
         /// <summary>
         /// Este método permite editar la información de una mantención existente, solicitando la identificación y ofreciendo opciones para editar sus atributos.
         /// </summary>
@@ -1658,18 +1655,6 @@ namespace ProyectoPOO_1
                             }
                         }
                         j++;
-
-                        // Imprimir mantenciones no terminadas.
-                        foreach (InfoReparacionMantencion w in mantenciones)
-                        {
-                            Console.WriteLine("Los siguientes vehículos no fueron entregados.");
-                            if (w.Entregado != true)
-                            {
-                                Console.WriteLine("-------------- Vehiculo " + (i + 1) + " --------------------");
-                                w.ObtenerInformacion();
-                                i++;
-                            }
-                        }
                         mantenciones.Clear();
                     }
                 }
