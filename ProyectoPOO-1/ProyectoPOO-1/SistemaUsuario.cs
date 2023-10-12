@@ -981,20 +981,37 @@ namespace ProyectoPOO_1
                                 break;
                         }
                     }
+                    string nuevoFechaEntrega = ""; // Inicializado a una cadena vacía por defecto
+                    bool nuevoEntrega = false;     // Inicializado como "no entregado" por defecto
 
-                    bool nuevoEntrega;
-                    // Pregunta si fue entregado para el bool "Entregado" que se usa en mantenciones.
                     while (true)
                     {
                         Console.WriteLine("¿El vehículo fue entregado? \n 1.- Entregado. \n 2.- No entregado.");
 
                         int opcionEntrega = int.Parse(Console.ReadLine());
+
                         if (opcionEntrega == 1)
                         {
                             nuevoEntrega = true;
-                            break;
+
+                            while (true)
+                            {
+                                Console.WriteLine("Ingrese la fecha de entrega del vehiculo en formato AAAA-MM-DD, recuerda que la fecha de entrega no puede ser menor a la de ingreso:");
+                                string fechaEntregaInput = Console.ReadLine();
+
+                                if (DateTime.TryParseExact(fechaEntregaInput, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fechaEntregaValue) && (DateTime.Parse(fechaIngreso) <= fechaEntregaValue))
+                                {
+                                    nuevoFechaEntrega = fechaEntregaInput; // Asignar el valor a la variable de instancia
+                                    Console.WriteLine("Fecha ingresada válida: " + fechaEntregaValue.ToString("yyyy-MM-dd"));
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Fecha ingresada no válida.");
+                                }
+                            }
                         }
-                        if (opcionEntrega == 2)
+                        else if (opcionEntrega == 2)
                         {
                             nuevoEntrega = false;
                             break;
@@ -1006,14 +1023,15 @@ namespace ProyectoPOO_1
                     }
 
                     // Se agrega la información de la mantención.
-                    InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado);
+                    InfoReparacionMantencion Mantencion = new InfoReparacionMantencion(patente, kilometraje, inspeccion, trabajo, fechaIngreso, piezasMantencion, nuevoEntrega, nuevoEmpleado, nuevoFechaEntrega);
                     info.Add(Mantencion);
                     Console.WriteLine("La mantencion se ha registrado exitosamente.");
-                    break;
+
+                    // Se limpia la lista de piezas de mantención para reutilizarla.
+                    piezasMantencion.Clear(); break;
                 }
-                // Se limpia la lista de piezas de mantención para reutilizarla.
-                piezasMantencion.Clear();
             }
+
             catch
             {
                 Console.WriteLine("Al ingresar un dato en opcion, asegurese de que es un entero.");

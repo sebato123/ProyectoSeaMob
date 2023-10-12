@@ -19,7 +19,7 @@ namespace ProyectoPOO_1
         private string fechaEntrega;
        
 
-        public InfoReparacionMantencion(string nuevoPatente, string nuevoKilometraje, string nuevoInspeccion, string nuevoTrabajo, string nuevoFecha, List<Piezas> nuevoListaPiezas, bool nuevoEntregado, Empleado nuevoEmpleado)
+        public InfoReparacionMantencion(string nuevoPatente, string nuevoKilometraje, string nuevoInspeccion, string nuevoTrabajo, string nuevoFecha, List<Piezas> nuevoListaPiezas, bool nuevoEntregado, Empleado nuevoEmpleado, string nuevoFechaEntrega)
         {       
             patente = nuevoPatente;
             kilometraje = nuevoKilometraje;
@@ -29,29 +29,7 @@ namespace ProyectoPOO_1
             listaPiezas = nuevoListaPiezas;
             entregado = nuevoEntregado;
             empleado = nuevoEmpleado;
-
-            if (entregado)
-            {
-                DateTime fechaIngreso = DateTime.Parse(fecha);
-                while (true)
-                {
-                    Console.WriteLine("Ingrese la fecha de entrega del vehiculo en formato AAAA-MM-DD, recuerda que la fecha de entrega no puede ser menor a la de ingreso:");
-                    string fechaEntregaInput = Console.ReadLine();
-
-                    if (DateTime.TryParseExact(fechaEntregaInput, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime fechaEntregaValue) && (fechaIngreso <= fechaEntregaValue))
-                    {
-                        fechaEntrega = fechaEntregaInput; // Asignar el valor a la variable de instancia
-                        Console.WriteLine("Fecha ingresada válida: " + fechaEntregaValue.ToString("yyyy-MM-dd"));
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Fecha ingresada no válida.");
-                    }
-                }
-            }
-
-
+            fechaEntrega = nuevoFechaEntrega;
 
         }
 
