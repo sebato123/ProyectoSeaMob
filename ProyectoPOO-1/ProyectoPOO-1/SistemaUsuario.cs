@@ -2033,151 +2033,201 @@ namespace ProyectoPOO_1
             }
             Console.ReadKey();
         }
-
         //--------------GUARDAR TXT--------------------------------
         private void GuardarInfoEnArchivo()
         {
-            Console.Clear();
-            Console.WriteLine("Ingrese el nombre del archivo para guardar los datos: ");
-            string archivo = Console.ReadLine().Trim();
 
-            using (StreamWriter writer = new StreamWriter(archivo))
+            StreamWriter writer = new StreamWriter("Guardado.txt");
+
+            writer.WriteLine(clientes.Count);
+            for (int i = 0; i < clientes.Count; i++)
             {
-                // Empleados
-                writer.WriteLine(empleados.Count);
-                foreach (var empleado in empleados)
-                {
-                    writer.WriteLine("Empleados");
-                    writer.WriteLine(empleado.RutEmpleado);
-                    writer.WriteLine(empleado.Nombre);
-                    writer.WriteLine(empleado.TelefonoEmpleado);
-                    writer.WriteLine();
-                }
-
-                // Clientes
-                writer.WriteLine(clientes.Count);
-                foreach (var cliente in clientes)
-                {
-                    writer.WriteLine("Clientes");
-                    writer.WriteLine(cliente.RazonSocial);
-                    writer.WriteLine(cliente.RutCliente);
-                    writer.WriteLine(cliente.Direccion);
-                    writer.WriteLine(cliente.TelefonoCliente);
-                    writer.WriteLine(cliente.Email);
-                    writer.WriteLine();
-
-                }
-
-                // Vehiculos
-                writer.WriteLine(vehiculos.Count);
-                foreach (var vehiculo in vehiculos)
-                {
-                    writer.WriteLine("Vehiculos");
-                    writer.WriteLine(vehiculo.Marca);
-                    writer.WriteLine(vehiculo.Patente);
-                    writer.WriteLine(vehiculo.Modelo);
-                    writer.WriteLine(vehiculo.Color);
-                    writer.WriteLine(vehiculo.Ano);
-                    writer.WriteLine();
-                }
-
-                // Partes o piezas
-                writer.WriteLine(piezas.Count);
-                foreach (var pieza in piezas)
-                {
-                    writer.WriteLine("Partes o Piezas");
-                    writer.WriteLine(pieza.IdentificadorUnico);
-                    writer.WriteLine(pieza.Marca);
-                    writer.WriteLine(pieza.Proveedor);
-                    writer.WriteLine(pieza.CostoUnitario);
-                    writer.WriteLine();
-                }
-
-                // Mantencion
-                writer.WriteLine(info.Count);
-                foreach (var record in info)
-                {
-                    writer.WriteLine("Mantencion");
-                    writer.WriteLine(record.Patente);
-                    writer.WriteLine(record.Kilometraje);
-                    writer.WriteLine(record.Inspeccion);
-                    writer.WriteLine(record.Trabajo);
-                    //writer.WriteLine(record.Fecha);
-                    writer.WriteLine(record.ListaPiezas);
-                    writer.WriteLine(record.Entregado);
-                    writer.WriteLine(record.FechaEntrega);
-                    writer.WriteLine();
-                }
+                writer.WriteLine(clientes[i].RazonSocial);
+                writer.WriteLine(clientes[i].RutCliente);
+                writer.WriteLine(clientes[i].Direccion);
+                writer.WriteLine(clientes[i].TelefonoCliente);
+                writer.WriteLine(clientes[i].Email);
             }
 
-            Console.WriteLine("Datos guardados correctamente.");
+            writer.WriteLine(empleados.Count);
+            for (int i = 0; i < empleados.Count; i++)
+            {
+                writer.WriteLine(empleados[i].Nombre);
+                writer.WriteLine(empleados[i].RutEmpleado);
+                writer.WriteLine(empleados[i].TelefonoEmpleado);
+            }
+
+            writer.WriteLine(vehiculos.Count);
+            for (int i = 0; i < vehiculos.Count; i++)
+            {
+                writer.WriteLine(vehiculos[i].Marca);
+                writer.WriteLine(vehiculos[i].Modelo);
+                writer.WriteLine(vehiculos[i].Patente);
+                writer.WriteLine(vehiculos[i].Color);
+                writer.WriteLine(vehiculos[i].Ano);
+            }
+
+            writer.WriteLine(piezas.Count);
+            for (int i = 0; i < piezas.Count; i++)
+            {
+                writer.WriteLine(piezas[i].IdentificadorUnico);
+                writer.WriteLine(piezas[i].CostoUnitario);
+                writer.WriteLine(piezas[i].Marca);
+                writer.WriteLine(piezas[i].Proveedor);
+            }
+
+            //Mantenciones
+            writer.WriteLine(info.Count);
+            foreach (InfoReparacionMantencion mantencion in info)
+            {
+                writer.WriteLine(mantencion.Empleado);
+                writer.WriteLine(mantencion.Patente);
+                writer.WriteLine(mantencion.Kilometraje);
+                writer.WriteLine(mantencion.Inspeccion);
+                writer.WriteLine(mantencion.Trabajo);
+                writer.WriteLine(mantencion.FechaIngreso);
+                writer.WriteLine(mantencion.Entregado);
+                writer.WriteLine(mantencion.FechaEntrega);
+
+                writer.WriteLine(mantencion.ListaPiezas.Count);
+                foreach (Piezas parte in mantencion.ListaPiezas)
+                {
+                    writer.WriteLine(parte.IdentificadorUnico);
+                    writer.WriteLine(parte.CostoUnitario);
+                    writer.WriteLine(parte.Marca);
+                    writer.WriteLine(parte.Proveedor);
+                }
+
+
+
+
+            }
+
+            writer.Close();
         }
 
-        public void CargarInfoDesdeArchivo()
+
+
+        private void CargarInfoDesdeArchivo()
         {
+            string[] lineas = File.ReadAllLines("Guardado.txt");
+            int Aux = 0;
 
-            Console.WriteLine("Ingrese el nombre del archivo para cargar los datos: ");
-            string archivo = Console.ReadLine().Trim();
 
-            if (File.Exists(archivo))
+            int CantidadDeClientes = int.Parse(lineas[Aux]); Aux++;
+
+            for (int i = 0; i < CantidadDeClientes; i++)
             {
+                string RazonSocial = lineas[Aux]; Aux++;
+                string Rut = lineas[Aux]; Aux++;
+                string Direccion = lineas[Aux]; Aux++;
+                string Telefono = lineas[Aux]; Aux++;
+                string Email = lineas[Aux]; Aux++;
 
-
-
-
-                //Cargamos los empleados
-                string[] lineas = File.ReadAllLines(archivo);
-                int indice = 1;
-                int numeroEmpleados = int.Parse(lineas[indice]);
-
-                for (int i = 0; i < numeroEmpleados; i++)
-                {
-                    string nombre = lineas[indice];
-                    indice++;
-                    indice++;
-                    string rutEmpleado = lineas[indice];
-                    indice++;
-                    string telefonoEmpleado = lineas[indice];
-                    indice++;
-                    int edad = int.Parse(lineas[indice]);
-
-                    Empleado empleado = new Empleado(rutEmpleado, nombre, telefonoEmpleado);
-                    empleados.Add(empleado);
-
-                }
-
-                indice++;
-
-                //Cargamos los clientes
-                int numeroClientes = int.Parse(lineas[indice]);
-
-                for (int i = 0; i < numeroClientes; i++)
-                {
-                    indice++;
-                    string razonSocial = lineas[indice];
-                    indice++;
-                    string rutCliente = lineas[indice];
-                    indice++;
-                    string direccion = lineas[indice];
-                    indice++;
-                    string telefonoCliente = lineas[indice];
-                    indice++;
-                    string email = lineas[indice];
-
-                    Cliente cliente = new Cliente(razonSocial, rutCliente, direccion, telefonoCliente, email);
-                    clientes.Add(cliente);
-
-
-                }
-
-                Console.WriteLine("Datos cargados correctamente.");
-            }
-            else
-            {
-                Console.WriteLine("El archivo no existe. Asegúrese de que el archivo especificado exista.");
+                Cliente bueno = new Cliente(RazonSocial, Rut, Direccion, Telefono, Email);
+                clientes.Add(bueno);
             }
 
 
+            int CantidadDeEmpleados = int.Parse(lineas[Aux]); Aux++;
+
+            for (int i = 0; i < CantidadDeEmpleados; i++)
+            {
+                string Nombre = lineas[Aux]; Aux++;
+                string Rut = lineas[Aux]; Aux++;
+                string TelefonoEmpleado = lineas[Aux]; Aux++;
+
+                Empleado bueno = new Empleado(Nombre, Rut, TelefonoEmpleado);
+                empleados.Add(bueno);
+            }
+
+
+            int CantidadDeVehiculos = int.Parse(lineas[Aux]); Aux++;
+
+            for (int i = 0; i < CantidadDeVehiculos; i++)
+            {
+                string Marca = lineas[Aux]; Aux++;
+                string Modelo = lineas[Aux]; Aux++;
+                string Patente = lineas[Aux]; Aux++;
+                string Color = lineas[Aux]; Aux++;
+                int Ano = int.Parse(lineas[Aux]); Aux++;
+                string RazonSocial = lineas[Aux]; Aux++; // Suponiendo que la razón social del cliente dueño está en el archivo
+
+                // Buscar el cliente por razón social (esto asume que las razones sociales de los clientes son únicas)
+                Cliente Dueno = clientes.FirstOrDefault(c => c.RazonSocial == RazonSocial);
+
+                if (Dueno != null)
+                {
+
+                    Vehiculo bueno = new Vehiculo(Marca, Modelo, Patente, Color, Ano, Dueno);
+                    vehiculos.Add(bueno);
+                }
+
+            }
+
+            int CantidadDePartesOPiezas = int.Parse(lineas[Aux]); Aux++;
+
+            for (int i = 0; i < CantidadDePartesOPiezas; i++)
+            {
+                string IdentificadorUnico = lineas[Aux]; Aux++;
+                string CostoUnitario = lineas[Aux]; Aux++;
+                string Marca = lineas[Aux]; Aux++;
+                string Proveedor = lineas[Aux]; Aux++;
+
+                Piezas bueno = new Piezas(IdentificadorUnico, Marca, Proveedor, CostoUnitario);
+                piezas.Add(bueno);
+            }
+
+
+
+            int CantidadDeMantenciones = int.Parse(lineas[Aux]); Aux++;
+
+            for (int i = 0; i < CantidadDeMantenciones; i++)
+            {
+                string Patente = lineas[Aux]; Aux++;
+                string Kilometraje = lineas[Aux]; Aux++;
+                string Inspeccion = lineas[Aux]; Aux++;
+                string Trabajo = lineas[Aux]; Aux++;
+                string Fecha = lineas[Aux]; Aux++;
+                bool entregado = bool.Parse(lineas[Aux]); Aux++;
+                string FechaEntrega = lineas[Aux]; Aux++;
+
+                // Cargar el empleado (supongamos que se almacena el nombre del empleado en el archivo)
+                string NombreEmpleado = lineas[Aux]; Aux++;
+
+                // Buscar el empleado por nombre (esto asume que los nombres de empleados son únicos)
+                Empleado empleado = empleados.FirstOrDefault(e => e.Nombre == NombreEmpleado);
+                if (empleado == null)
+                {
+
+                    empleado = new Empleado(NombreEmpleado, "", "");
+                }
+
+
+                int CantidadParteOPiezas = int.Parse(lineas[Aux]); Aux++;
+
+                List<Piezas> piezas = new List<Piezas>();
+                for (int j = 0; j < CantidadParteOPiezas; j++)
+                {
+                    string IdentificadorUnico = lineas[Aux]; Aux++;
+                    string CostoUnitario = lineas[Aux]; Aux++;
+                    string Marca = lineas[Aux]; Aux++;
+                    string Proveedor = lineas[Aux]; Aux++;
+
+                    Piezas nuevo = new Piezas(IdentificadorUnico, Marca, Proveedor, CostoUnitario);
+                    piezas.Add(nuevo);
+                }
+
+
+
+
+                InfoReparacionMantencion bueno = new InfoReparacionMantencion(Patente, Kilometraje, Inspeccion, Trabajo, Fecha, piezas,entregado, empleado, FechaEntrega);
+                info.Add(bueno);
+
+
+
+
+            }
         }
 
 
